@@ -1,12 +1,17 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var itemViewModel = ItemViewModel()
+    @StateObject private var itemViewModel: ItemViewModel
     @State private var searchText = ""
     @State private var showAddItemSheet = false
     @State private var showPanicMode = false
     
     var showTabBar: Bool = true
+    
+    init(viewModel: ItemViewModel = ItemViewModel(), showTabBar: Bool = true) {
+        self.showTabBar = showTabBar
+        _itemViewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         ZStack {
@@ -346,5 +351,5 @@ struct QuickActionCard: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(viewModel: PreviewItemViewModel())
 }

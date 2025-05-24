@@ -3,7 +3,7 @@ import MapKit
 
 struct ItemDetailsView: View {
     @Environment(\.presentationMode) var presentationMode
-    @StateObject private var itemViewModel = ItemViewModel()
+    @StateObject private var itemViewModel: ItemViewModel
     @State private var showEditSheet = false
     @State private var showShareSheet = false
     @State private var showDeleteConfirmation = false
@@ -27,8 +27,9 @@ struct ItemDetailsView: View {
     // Item can be passed in or use the default
     let item: Item
     
-    init(item: Item = ItemDetailsView.defaultItem) {
+    init(item: Item = ItemDetailsView.defaultItem, viewModel: ItemViewModel = ItemViewModel()) {
         self.item = item
+        _itemViewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
@@ -393,7 +394,6 @@ struct EditItemView: View {
 
 #Preview {
     NavigationView {
-        ItemDetailsView()
-            .environmentObject(PreviewItemViewModel())
+        ItemDetailsView(viewModel: PreviewItemViewModel())
     }
 }
