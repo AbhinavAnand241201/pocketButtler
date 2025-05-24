@@ -398,24 +398,7 @@ struct AddReminderView: View {
     }
 }
 
-extension View {
-    func standardTextFieldStyle() -> some View {
-        self
-            .padding()
-            .background(Constants.Colors.lightBackground)
-            .cornerRadius(Constants.Dimensions.cornerRadius)
-            .foregroundColor(.white)
-    }
-    
-    func standardButtonStyle() -> some View {
-        self
-            .font(.system(size: Constants.FontSizes.button, weight: .bold))
-            .foregroundColor(.white)
-            .padding()
-            .background(Constants.Colors.primaryPurple)
-            .cornerRadius(Constants.Dimensions.buttonCornerRadius)
-    }
-}
+// Note: Using the standardTextFieldStyle and standardButtonStyle from Extensions.swift
 
 #Preview {
     RemindersView()
