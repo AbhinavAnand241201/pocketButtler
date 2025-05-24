@@ -3,7 +3,6 @@
 ## Overview
 
 Pocket Butler is an iOS app that helps you keep track of your everyday items. It allows you to quickly log where you placed items and retrieve that information in seconds when you need them. No Bluetooth trackers, no complex setup—just quick logging and smart reminders.
-
 ## Features
 
 - **Voice or One-Tap Logging**: Quickly log where you placed items using voice commands or a simple tap.
