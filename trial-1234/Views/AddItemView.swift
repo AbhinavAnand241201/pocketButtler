@@ -9,6 +9,8 @@ struct AddItemView: View {
     @State private var selectedImage: UIImage?
     @State private var showImagePicker = false
     @State private var photoPickerItem: PhotosPickerItem?
+    @State private var isFavorite = false
+    @State private var item: Item? = nil
     
     var body: some View {
         NavigationView {
@@ -81,7 +83,7 @@ struct AddItemView: View {
                         
                         Spacer()
                         
-                        Toggle("", isOn: .constant(false))
+                        Toggle("", isOn: $isFavorite)
                             .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.primaryPurple))
                     }
                     .padding()
@@ -92,7 +94,22 @@ struct AddItemView: View {
                     
                     // Save button
                     Button(action: {
-                        saveItem()
+                        // Create a new item with the favorite status
+                        let photoUrl = selectedImage != nil ? "photo_url_placeholder" : nil
+                        itemViewModel.addItem(name: itemName, location: itemLocation, photoUrl: photoUrl)
+                        
+                        // If favorite is set, toggle it after item is created
+                        if isFavorite {
+                            // In a real app, we would get the created item and toggle its favorite status
+                            // For now, we'll just simulate this behavior
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                if let lastItem = itemViewModel.items.last {
+                                    itemViewModel.toggleFavorite(for: lastItem)
+                                }
+                            }
+                        }
+                        
+                        presentationMode.wrappedValue.dismiss()
                     }) {
                         Text("Save Item")
                             .frame(maxWidth: .infinity)
@@ -134,15 +151,7 @@ struct AddItemView: View {
         }
     }
     
-    private func saveItem() {
-        // For now, just simulate adding an item and dismiss
-        // In a real app, this would call the itemViewModel.addItem method
-        
-        // Simulate API call delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            presentationMode.wrappedValue.dismiss()
-        }
-    }
+
 }
 
 #Preview {

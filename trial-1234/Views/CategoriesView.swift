@@ -2,16 +2,7 @@ import SwiftUI
 
 struct CategoriesView: View {
     @Environment(\.presentationMode) var presentationMode
-    
-    // Sample categories for preview
-    let categories = [
-        Category(id: "1", name: "Electronics", icon: "laptopcomputer", color: .blue),
-        Category(id: "2", name: "Documents", icon: "doc.fill", color: .green),
-        Category(id: "3", name: "Keys", icon: "key.fill", color: .yellow),
-        Category(id: "4", name: "Accessories", icon: "eyeglasses", color: .purple),
-        Category(id: "5", name: "Clothing", icon: "tshirt.fill", color: .red),
-        Category(id: "6", name: "Wallet", icon: "creditcard.fill", color: .orange)
-    ]
+    @StateObject private var categoryViewModel = CategoryViewModel()
     
     @State private var showAddCategorySheet = false
     
@@ -25,7 +16,7 @@ struct CategoriesView: View {
                 VStack(spacing: Constants.Dimensions.standardPadding) {
                     // Grid of categories
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
-                        ForEach(categories) { category in
+                        ForEach(categoryViewModel.categories) { category in
                             CategoryCell(category: category)
                         }
                         
@@ -70,7 +61,10 @@ struct CategoriesView: View {
                 }
             }
             .sheet(isPresented: $showAddCategorySheet) {
-                AddCategoryView()
+                AddCategoryView(categoryViewModel: categoryViewModel)
+            }
+            .onAppear {
+                categoryViewModel.fetchCategories()
             }
         }
     }
@@ -111,15 +105,16 @@ struct CategoryCell: View {
 
 struct AddCategoryView: View {
     @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var categoryViewModel: CategoryViewModel
     @State private var categoryName = ""
     @State private var selectedIcon = "tag.fill"
     @State private var selectedColor = Color.blue
+    @State private var isLoading = false
+    @State private var errorMessage: String? = nil
     
     // Sample icons
     let icons = [
-        "tag.fill", "folder.fill", "paperclip", "doc.fill", "book.fill",
-        "creditcard.fill", "key.fill", "laptopcomputer", "desktopcomputer",
-        "headphones", "tv.fill", "gamecontroller.fill", "car.fill",
+        "tag.fill", "laptopcomputer", "doc.fill", "key.fill",
         "bicycle", "tshirt.fill", "eyeglasses", "bag.fill"
     ]
     
@@ -213,15 +208,25 @@ struct AddCategoryView: View {
                     
                     // Save button
                     Button(action: {
-                        // Save category logic would go here
-                        presentationMode.wrappedValue.dismiss()
+                        saveCategory()
                     }) {
-                        Text("Save Category")
-                            .frame(maxWidth: .infinity)
+                        if isLoading {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        } else {
+                            Text("Save Category")
+                                .frame(maxWidth: .infinity)
+                        }
                     }
                     .standardButtonStyle()
-                    .disabled(categoryName.isEmpty)
-                    .opacity(categoryName.isEmpty ? 0.7 : 1)
+                    .disabled(categoryName.isEmpty || isLoading)
+                    .opacity((categoryName.isEmpty || isLoading) ? 0.7 : 1)
+                    
+                    if let errorMessage = errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .font(.system(size: 14))
+                    }
                 }
                 .padding()
                 .navigationTitle("Add Category")
@@ -237,6 +242,26 @@ struct AddCategoryView: View {
                     }
                 }
             }
+        }
+    }
+    
+    private func saveCategory() {
+        isLoading = true
+        errorMessage = nil
+        
+        // Create a new category with a unique ID
+        let newCategory = Category(id: UUID().uuidString,
+                                 name: categoryName,
+                                 icon: selectedIcon,
+                                 color: selectedColor)
+        
+        // Add the category to the view model
+        categoryViewModel.addCategory(category: newCategory)
+        
+        // Simulate API call delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            isLoading = false
+            presentationMode.wrappedValue.dismiss()
         }
     }
 }

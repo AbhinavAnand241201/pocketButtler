@@ -39,6 +39,7 @@ struct PanicModeView: View {
     @StateObject private var soundManager = SoundManager.shared
     @State private var isPlaying = false
     @State private var animationAmount = 1.0
+    @State private var navigateToHome = false
     
     var body: some View {
         ZStack {
@@ -49,7 +50,7 @@ struct PanicModeView: View {
             VStack(spacing: Constants.Dimensions.standardPadding * 2) {
                 // Title
                 Text("Panic Mode")
-                    .font(.system(size: Constants.FontSizes.title, weight: .bold))
+                    .font(.system(size: 28, weight: .bold))
                     .foregroundColor(.white)
                 
                 // Illustration
@@ -77,7 +78,7 @@ struct PanicModeView: View {
                 
                 // Description
                 Text("Plays a loud sound to help you locate nearby items")
-                    .font(.system(size: Constants.FontSizes.body))
+                    .font(.system(size: 18))
                     .foregroundColor(.white.opacity(0.8))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
@@ -94,6 +95,7 @@ struct PanicModeView: View {
                     isPlaying.toggle()
                 }) {
                     Text(isPlaying ? "Stop Sound" : "Play Sound")
+                        .font(.system(size: 20, weight: .bold))
                         .frame(maxWidth: .infinity)
                 }
                 .standardButtonStyle()
@@ -104,9 +106,10 @@ struct PanicModeView: View {
                     if isPlaying {
                         soundManager.stopSound()
                     }
-                    presentationMode.wrappedValue.dismiss()
+                    navigateToHome = true
                 }) {
-                    Text("Close")
+                    Text("Back to Home")
+                        .font(.system(size: 18))
                         .foregroundColor(.white)
                         .underline()
                 }
@@ -127,6 +130,9 @@ struct PanicModeView: View {
                     }
                 }
             }
+        }
+        .fullScreenCover(isPresented: $navigateToHome) {
+            HomeView()
         }
     }
 }

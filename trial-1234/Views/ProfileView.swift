@@ -17,11 +17,15 @@ struct ProfileView: View {
                     // Profile header
                     VStack(spacing: Constants.Dimensions.standardPadding) {
                         // Avatar
-                        Image(systemName: "person.crop.circle.fill")
+                        Image("shh3")
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 80, height: 80)
-                            .foregroundColor(Constants.Colors.primaryPurple)
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 100, height: 100)
+                            .clipShape(Circle())
+                            .overlay(
+                                Circle()
+                                    .stroke(Constants.Colors.primaryPurple, lineWidth: 3)
+                            )
                         
                         // Name
                         if isEditing {
@@ -30,7 +34,7 @@ struct ProfileView: View {
                                 .multilineTextAlignment(.center)
                         } else {
                             Text(name)
-                                .font(.system(size: Constants.FontSizes.title, weight: .bold))
+                                .font(.system(size: 24, weight: .bold))
                                 .foregroundColor(.white)
                         }
                     }
@@ -73,13 +77,13 @@ struct ProfileView: View {
                             // Email display
                             HStack {
                                 Text("Email")
-                                    .font(.system(size: Constants.FontSizes.body))
+                                    .font(.system(size: 18))
                                     .foregroundColor(.white.opacity(0.7))
                                 
                                 Spacer()
                                 
                                 Text(email)
-                                    .font(.system(size: Constants.FontSizes.body))
+                                    .font(.system(size: 18))
                                     .foregroundColor(.white)
                             }
                             .padding()
@@ -90,13 +94,13 @@ struct ProfileView: View {
                             // Account type display
                             HStack {
                                 Text("Account Type")
-                                    .font(.system(size: Constants.FontSizes.body))
+                                    .font(.system(size: 18))
                                     .foregroundColor(.white.opacity(0.7))
                                 
                                 Spacer()
                                 
                                 Text("Free")
-                                    .font(.system(size: Constants.FontSizes.body))
+                                    .font(.system(size: 18))
                                     .foregroundColor(.white)
                             }
                             .padding()
@@ -106,13 +110,13 @@ struct ProfileView: View {
                             // Member since display
                             HStack {
                                 Text("Member Since")
-                                    .font(.system(size: Constants.FontSizes.body))
+                                    .font(.system(size: 18))
                                     .foregroundColor(.white.opacity(0.7))
                                 
                                 Spacer()
                                 
                                 Text("May 2025")
-                                    .font(.system(size: Constants.FontSizes.body))
+                                    .font(.system(size: 18))
                                     .foregroundColor(.white)
                             }
                             .padding()
@@ -125,7 +129,9 @@ struct ProfileView: View {
                             }) {
                                 HStack {
                                     Image(systemName: "pencil")
+                                        .font(.system(size: 18))
                                     Text("Edit Profile")
+                                        .font(.system(size: 18, weight: .medium))
                                 }
                                 .frame(maxWidth: .infinity)
                             }

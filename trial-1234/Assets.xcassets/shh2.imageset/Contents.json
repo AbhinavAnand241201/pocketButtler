@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "leah-hetteberg-6O9XTG6m-n0-unsplash.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "leah-hetteberg-6O9XTG6m-n0-unsplash 1.jpg",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "leah-hetteberg-6O9XTG6m-n0-unsplash 2.jpg",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

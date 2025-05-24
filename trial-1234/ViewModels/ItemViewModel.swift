@@ -37,6 +37,46 @@ class ItemViewModel: ObservableObject {
     }
     
     // Add a new item
+    func addItem(item: Item) {
+        isLoading = true
+        error = nil
+        
+        let itemData: [String: Any] = [
+            "name": item.name,
+            "location": item.location,
+            "ownerId": item.ownerId,
+            "timestamp": ISO8601DateFormatter().string(from: item.timestamp),
+            "photoUrl": item.photoUrl as Any,
+            "isFavorite": item.isFavorite
+        ]
+        
+        apiService.request(
+            endpoint: Constants.API.itemsEndpoint,
+            method: "POST",
+            body: itemData
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] completion in
+            self?.isLoading = false
+            
+            if case .failure(let error) = completion {
+                self?.error = "Failed to add item: \(error.localizedDescription)"
+            }
+        } receiveValue: { [weak self] (newItem: Item) in
+            self?.items.append(newItem)
+            
+            // Update cached items
+            var cachedItems = self?.items ?? []
+            cachedItems.append(newItem)
+            self?.cacheItems(cachedItems)
+            
+            // Schedule a reminder notification
+            NotificationService.shared.scheduleItemReminder(item: newItem)
+        }
+        .store(in: &cancellables)
+    }
+    
+    // Add a new item with individual parameters
     func addItem(name: String, location: String, photoUrl: String? = nil) {
         isLoading = true
         error = nil

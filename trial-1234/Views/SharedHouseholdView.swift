@@ -2,20 +2,21 @@ import SwiftUI
 
 struct SharedHouseholdView: View {
     @State private var showAddMemberSheet = false
+    @State private var selectedTab = 1
     
-    // Sample data for preview
+    // Sample data for preview with proper image names
     let members = [
-        (name: "Dad", image: "person.fill"),
-        (name: "Mom", image: "person.fill"),
-        (name: "Son", image: "person.fill"),
-        (name: "Daughter", image: "person.fill")
+        (name: "Dad", image: "shh1"),
+        (name: "Mom", image: "shh2"),
+        (name: "Son", image: "shh3"),
+        (name: "Daughter", image: "shh4")
     ]
     
     let activityLogs = [
-        (name: "Dad", action: "logged 'Remote'", location: "Living Room", time: "6:30 PM", image: "person.fill"),
-        (name: "Mom", action: "logged 'Keys'", location: "Kitchen", time: "5:45 PM", image: "person.fill"),
-        (name: "Son", action: "logged 'Laptop'", location: "Bedroom", time: "5:00 PM", image: "person.fill"),
-        (name: "Daughter", action: "logged 'Bike'", location: "Garage", time: "4:45 PM", image: "person.fill")
+        (name: "Dad", action: "logged 'Remote'", location: "Living Room", time: "6:30 PM", image: "shh1"),
+        (name: "Mom", action: "logged 'Keys'", location: "Kitchen", time: "5:45 PM", image: "shh2"),
+        (name: "Son", action: "logged 'Laptop'", location: "Bedroom", time: "5:00 PM", image: "shh3"),
+        (name: "Daughter", action: "logged 'Bike'", location: "Garage", time: "4:45 PM", image: "shh4")
     ]
     
     var body: some View {
@@ -28,26 +29,25 @@ struct SharedHouseholdView: View {
                 // Members section
                 VStack(alignment: .leading, spacing: Constants.Dimensions.standardPadding) {
                     Text("Members")
-                        .font(.system(size: Constants.FontSizes.title, weight: .bold))
+                        .font(.system(size: 24, weight: .bold))
                         .foregroundColor(.white)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 20) {
                             ForEach(members, id: \.name) { member in
                                 VStack {
-                                    Image(systemName: member.image)
+                                    Image(member.image)
                                         .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 50, height: 50)
-                                        .padding(8)
-                                        .background(
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 60, height: 60)
+                                        .clipShape(Circle())
+                                        .overlay(
                                             Circle()
-                                                .fill(Constants.Colors.lightBackground)
+                                                .stroke(Constants.Colors.lightPurple, lineWidth: 2)
                                         )
-                                        .foregroundColor(.white)
                                     
                                     Text(member.name)
-                                        .font(.system(size: Constants.FontSizes.caption))
+                                        .font(.system(size: 16))
                                         .foregroundColor(.white)
                                 }
                             }
@@ -60,8 +60,8 @@ struct SharedHouseholdView: View {
                                     Image(systemName: "plus")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: 25, height: 25)
-                                        .padding(8)
+                                        .frame(width: 30, height: 30)
+                                        .padding(10)
                                         .background(
                                             Circle()
                                                 .stroke(Color.white, lineWidth: 2)
@@ -70,10 +70,11 @@ struct SharedHouseholdView: View {
                                 }
                                 
                                 Text("Add")
-                                    .font(.system(size: Constants.FontSizes.caption))
+                                    .font(.system(size: 16))
                                     .foregroundColor(.white)
                             }
                         }
+                        .padding(.vertical, 8)
                     }
                 }
                 .padding()
@@ -81,37 +82,36 @@ struct SharedHouseholdView: View {
                 // Activity Feed section
                 VStack(alignment: .leading, spacing: Constants.Dimensions.standardPadding) {
                     Text("Activity Feed")
-                        .font(.system(size: Constants.FontSizes.title, weight: .bold))
+                        .font(.system(size: 24, weight: .bold))
                         .foregroundColor(.white)
                     
                     ForEach(activityLogs, id: \.name) { log in
                         HStack(spacing: 12) {
                             // Avatar
-                            Image(systemName: log.image)
+                            Image(log.image)
                                 .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 24, height: 24)
-                                .padding(8)
-                                .background(
-                                    Circle()
-                                        .fill(Constants.Colors.lightBackground)
-                                )
-                                .foregroundColor(.white)
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 40, height: 40)
+                                .clipShape(Circle())
                             
                             // Activity details
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("\(log.name) \(log.action)")
-                                    .font(.system(size: Constants.FontSizes.body))
+                                    .font(.system(size: 18))
                                     .foregroundColor(.white)
                                 
                                 Text("\(log.location) • \(log.time)")
-                                    .font(.system(size: Constants.FontSizes.caption))
+                                    .font(.system(size: 16))
                                     .foregroundColor(Constants.Colors.lightPurple)
                             }
                             
                             Spacer()
                         }
-                        .padding(.vertical, 8)
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 8)
+                        .background(Constants.Colors.lightBackground)
+                        .cornerRadius(Constants.Dimensions.cornerRadius)
+                        .padding(.vertical, 4)
                     }
                 }
                 .padding()
@@ -124,11 +124,13 @@ struct SharedHouseholdView: View {
                 }) {
                     HStack {
                         Image(systemName: "person.badge.plus")
+                            .font(.system(size: 18))
                         Text("Add Member")
+                            .font(.system(size: 18, weight: .bold))
                     }
                     .frame(maxWidth: .infinity)
+                    .padding(16)
                 }
-                .frame(height: Constants.Dimensions.buttonHeight)
                 .background(Constants.Colors.lightPurple)
                 .cornerRadius(Constants.Dimensions.buttonCornerRadius)
                 .foregroundColor(.white)
@@ -136,16 +138,25 @@ struct SharedHouseholdView: View {
                 
                 // Tab bar
                 HStack {
-                    TabBarButton(
-                        icon: "house.fill",
-                        text: "Home"
-                    )
+                    Button(action: {
+                        selectedTab = 0
+                    }) {
+                        TabBarButton(
+                            icon: "house.fill",
+                            text: "Home",
+                            isSelected: selectedTab == 0
+                        )
+                    }
                     
-                    TabBarButton(
-                        icon: "person.2.fill",
-                        text: "Shared",
-                        isSelected: true
-                    )
+                    Button(action: {
+                        selectedTab = 1
+                    }) {
+                        TabBarButton(
+                            icon: "person.2.fill",
+                            text: "Shared",
+                            isSelected: selectedTab == 1
+                        )
+                    }
                     
                     // Center button (add)
                     Button(action: {
@@ -164,15 +175,25 @@ struct SharedHouseholdView: View {
                     }
                     .offset(y: -20)
                     
-                    TabBarButton(
-                        icon: "map.fill",
-                        text: "Map"
-                    )
+                    Button(action: {
+                        selectedTab = 3
+                    }) {
+                        TabBarButton(
+                            icon: "map.fill",
+                            text: "Map",
+                            isSelected: selectedTab == 3
+                        )
+                    }
                     
-                    TabBarButton(
-                        icon: "gearshape.fill",
-                        text: "Settings"
-                    )
+                    Button(action: {
+                        selectedTab = 4
+                    }) {
+                        TabBarButton(
+                            icon: "gearshape.fill",
+                            text: "Settings",
+                            isSelected: selectedTab == 4
+                        )
+                    }
                 }
                 .padding(.horizontal)
                 .padding(.top, 8)
@@ -184,6 +205,15 @@ struct SharedHouseholdView: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showAddMemberSheet) {
             AddMemberView()
+        }
+        .fullScreenCover(isPresented: .constant(selectedTab != 1)) {
+            if selectedTab == 0 {
+                HomeView()
+            } else if selectedTab == 3 {
+                MapView()
+            } else if selectedTab == 4 {
+                SettingsView()
+            }
         }
     }
 }
