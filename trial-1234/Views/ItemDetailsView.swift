@@ -109,17 +109,15 @@ struct ItemDetailsView: View {
                                 .font(.system(size: Constants.FontSizes.body, weight: .medium))
                                 .foregroundColor(.white)
                             
-                            Map(coordinateRegion: $selectedMapRegion, annotationItems: [MapAnnotation(coordinate: coordinates)]) { annotation in
-                                MapMarker(coordinate: annotation.coordinate, tint: Constants.Colors.primaryPurple)
+                            Map(initialPosition: .region(MKCoordinateRegion(
+                                center: coordinates,
+                                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                            ))) {
+                                Marker("Item Location", coordinate: coordinates)
+                                    .tint(Constants.Colors.primaryPurple)
                             }
                             .frame(height: 200)
                             .cornerRadius(Constants.Dimensions.cornerRadius)
-                            .onAppear {
-                                selectedMapRegion = MKCoordinateRegion(
-                                    center: coordinates,
-                                    span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-                                )
-                            }
                         }
                     }
                     

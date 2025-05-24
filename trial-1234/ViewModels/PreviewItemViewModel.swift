@@ -4,22 +4,23 @@ import SwiftUI
 import MapKit
 
 // A preview-friendly version of ItemViewModel that uses mock data
-class PreviewItemViewModel: ObservableObject {
-    @Published var items: [Item] = []
-    @Published var favoriteItems: [Item] = []
-    @Published var isLoading = false
-    @Published var error: String?
+class PreviewItemViewModel: ItemViewModel {
+    // No need to redeclare published properties as they're inherited from ItemViewModel
     
-    private var cancellables = Set<AnyCancellable>()
+    // Override the isPreview property
+    override var isPreview: Bool {
+        return true
+    }
     
-    init() {
+    override init() {
+        super.init()
         // Initialize with mock data
         self.items = MockAPIService.shared.mockItems
         self.favoriteItems = MockAPIService.shared.mockItems.filter { $0.isFavorite }
     }
     
-    // Add a new item
-    func addItem(item: Item) {
+    // Override add item method
+    override func addItem(item: Item) {
         isLoading = true
         
         // Simulate network delay
@@ -32,8 +33,8 @@ class PreviewItemViewModel: ObservableObject {
         }
     }
     
-    // Delete an item
-    func deleteItem(_ item: Item) {
+    // Override delete item method
+    override func deleteItem(_ item: Item) {
         isLoading = true
         
         // Simulate network delay
@@ -44,8 +45,8 @@ class PreviewItemViewModel: ObservableObject {
         }
     }
     
-    // Toggle favorite status
-    func toggleFavorite(for item: Item) {
+    // Override toggle favorite method
+    override func toggleFavorite(for item: Item) {
         isLoading = true
         
         // Create updated item with toggled favorite status

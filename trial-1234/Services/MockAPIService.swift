@@ -4,8 +4,8 @@ import CoreLocation
 import MapKit
 import SwiftUI
 
-// Define APIError for the mock service
-enum APIError: Error {
+// Define MockAPIError for the mock service to avoid ambiguity
+enum MockAPIError: Error {
     case invalidURL
     case invalidResponse
     case requestFailed(Error)
@@ -60,9 +60,9 @@ class MockAPIService {
         endpoint: String,
         method: String = "GET",
         body: [String: Any]? = nil
-    ) -> AnyPublisher<T, APIError> {
+    ) -> AnyPublisher<T, MockAPIError> {
         // Simulate network delay
-        return Future<T, APIError> { promise in
+        return Future<T, MockAPIError> { promise in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 // Return mock data based on the endpoint and type
                 if endpoint.contains("/items") {

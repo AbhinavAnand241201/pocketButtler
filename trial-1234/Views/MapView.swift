@@ -31,7 +31,7 @@ struct MapView: View {
                 // Map
                 Map(position: $position) {
                     ForEach(itemLocations) { item in
-                        Annotation(item.name, coordinate: item.coordinate) {
+                        Annotation(coordinate: item.coordinate) {
                             Button(action: {
                                 selectedItem = item
                                 showItemDetails = true
@@ -58,6 +58,8 @@ struct MapView: View {
                                         .cornerRadius(4)
                                 }
                             }
+                        } label: {
+                            Text(item.name)
                         }
                     }
                 }
@@ -82,14 +84,11 @@ struct MapView: View {
                                     showItemDetails = true
                                     
                                     // Center map on selected item
-                                    withAnimation {
-                                        position = .region(
-                                            MKCoordinateRegion(
-                                                center: item.coordinate,
-                                                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-                                            )
-                                        )
-                                    }
+                                    // Update map position to focus on this item
+                                    position = .region(MKCoordinateRegion(
+                                        center: item.coordinate,
+                                        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                                    ))
                                 }) {
                                     VStack(alignment: .leading) {
                                         // Actual image
