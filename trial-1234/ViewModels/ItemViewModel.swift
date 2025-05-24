@@ -1,6 +1,9 @@
 import Foundation
 import Combine
 
+// Empty response for DELETE operations
+struct EmptyResponse: Decodable {}
+
 class ItemViewModel: ObservableObject {
     @Published var items: [Item] = []
     @Published var favoriteItems: [Item] = []
@@ -150,6 +153,34 @@ class ItemViewModel: ObservableObject {
                 self?.items = searchResults
             }
             .store(in: &cancellables)
+    }
+    
+    // Delete an item
+    func deleteItem(_ item: Item) {
+        isLoading = true
+        error = nil
+        
+        apiService.request(
+            endpoint: Constants.API.itemsEndpoint + "/\(item.id)",
+            method: "DELETE",
+            body: nil
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] completion in
+            self?.isLoading = false
+            
+            if case .failure(let error) = completion {
+                self?.error = "Failed to delete item: \(error.localizedDescription)"
+            }
+        } receiveValue: { [weak self] (_: EmptyResponse) in
+            // Remove the item from the local array
+            self?.items.removeAll { $0.id == item.id }
+            self?.favoriteItems.removeAll { $0.id == item.id }
+            
+            // Update cached items
+            self?.cacheItems(self?.items ?? [])
+        }
+        .store(in: &cancellables)
     }
     
     // Toggle favorite status

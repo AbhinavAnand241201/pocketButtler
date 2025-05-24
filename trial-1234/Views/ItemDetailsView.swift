@@ -17,9 +17,10 @@ struct ItemDetailsView: View {
         id: "123",
         name: "House Keys",
         location: "Kitchen Counter",
+        ownerId: "user123",
+        timestamp: Date().addingTimeInterval(-3600),
         photoUrl: nil,
         isFavorite: true,
-        timestamp: Date().addingTimeInterval(-3600),
         coordinates: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194)
     )
     
@@ -240,15 +241,7 @@ struct MapAnnotation: Identifiable {
     let coordinate: CLLocationCoordinate2D
 }
 
-struct Item: Identifiable {
-    let id: String
-    let name: String
-    let location: String
-    let photoUrl: String?
-    let isFavorite: Bool
-    let timestamp: Date
-    let coordinates: CLLocationCoordinate2D?
-}
+// Using the Item model from Models/Item.swift
 
 struct ItemHistoryEntry: Identifiable {
     let id: String
