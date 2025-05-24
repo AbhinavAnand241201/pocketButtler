@@ -295,6 +295,8 @@ struct EditItemView: View {
     @State private var itemName: String
     @State private var itemLocation: String
     @State private var isFavorite: Bool
+    @State private var latitude: Double?
+    @State private var longitude: Double?
     
     let item: Item
     
@@ -303,6 +305,8 @@ struct EditItemView: View {
         _itemName = State(initialValue: item.name)
         _itemLocation = State(initialValue: item.location)
         _isFavorite = State(initialValue: item.isFavorite)
+        _latitude = State(initialValue: item.latitude)
+        _longitude = State(initialValue: item.longitude)
     }
     
     var body: some View {
