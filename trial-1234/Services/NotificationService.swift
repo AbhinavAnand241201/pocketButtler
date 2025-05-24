@@ -1,17 +1,20 @@
 import Foundation
 import UserNotifications
 import CoreLocation
+import SwiftUI
 
-class NotificationService {
+class NotificationService: NSObject, CLLocationManagerDelegate {
     static let shared = NotificationService()
     private let notificationCenter = UNUserNotificationCenter.current()
     private let locationManager = CLLocationManager()
     
-    private init() {
+    private override init() {
+        super.init()
         setupLocationManager()
     }
     
     private func setupLocationManager() {
+        locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 100 // meters
     }
@@ -76,5 +79,22 @@ class NotificationService {
                 print("Error sending geofencing alert: \(error.localizedDescription)")
             }
         }
+    }
+    
+    // MARK: - CLLocationManagerDelegate Methods
+    
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        print("Entered region: \(region.identifier)")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        print("Exited region: \(region.identifier)")
+        // Send notification when user leaves home without an item
+        sendGeofencingAlert(itemName: "Keys", location: "Home")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
+        print("Monitoring failed for region with identifier: \(region?.identifier ?? "unknown")")  
+        print("Error: \(error.localizedDescription)")
     }
 }

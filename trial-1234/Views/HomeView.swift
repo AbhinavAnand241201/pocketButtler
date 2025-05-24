@@ -6,6 +6,8 @@ struct HomeView: View {
     @State private var showAddItemSheet = false
     @State private var showPanicMode = false
     
+    var showTabBar: Bool = true
+    
     var body: some View {
         ZStack {
             // Background
@@ -60,7 +62,7 @@ struct HomeView: View {
                     
                     TextField("Search for items...", text: $searchText)
                         .foregroundColor(.white)
-                        .onChange(of: searchText) { newValue in
+                        .onChange(of: searchText) { oldValue, newValue in
                             if !newValue.isEmpty {
                                 itemViewModel.searchItems(query: newValue)
                             } else {
@@ -203,68 +205,10 @@ struct HomeView: View {
                     .padding(.top, Constants.Dimensions.standardPadding * 2)
                 }
                 
-                // Tab bar
-                HStack {
-                    TabBarButton(
-                        icon: "house.fill",
-                        text: "Home",
-                        isSelected: true
-                    )
-                    
-                    TabBarButton(
-                        icon: "person.2.fill",
-                        text: "Shared"
-                    )
-                    .onTapGesture {
-                        // Navigate to Shared Household View
-                        if let window = UIApplication.shared.windows.first {
-                            window.rootViewController = UIHostingController(rootView: MainTabView(selectedTab: 1))
-                        }
-                    }
-                    
-                    // Center button (add)
-                    Button(action: {
-                        showAddItemSheet = true
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(Constants.Colors.primaryPurple)
-                                .frame(width: 56, height: 56)
-                                .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
-                            
-                            Image(systemName: "plus")
-                                .font(.system(size: 24, weight: .bold))
-                                .foregroundColor(.white)
-                        }
-                    }
-                    .offset(y: -20)
-                    
-                    TabBarButton(
-                        icon: "map.fill",
-                        text: "Map"
-                    )
-                    .onTapGesture {
-                        // Navigate to Map View
-                        if let window = UIApplication.shared.windows.first {
-                            window.rootViewController = UIHostingController(rootView: MainTabView(selectedTab: 3))
-                        }
-                    }
-                    
-                    TabBarButton(
-                        icon: "gearshape.fill",
-                        text: "Settings"
-                    )
-                    .onTapGesture {
-                        // Navigate to Settings View
-                        if let window = UIApplication.shared.windows.first {
-                            window.rootViewController = UIHostingController(rootView: MainTabView(selectedTab: 4))
-                        }
-                    }
+                // Only show tab bar if needed (not when used in MainTabView)
+                if showTabBar {
+                    Spacer()
                 }
-                .padding(.horizontal)
-                .padding(.top, 8)
-                .padding(.bottom, 4)
-                .background(Constants.Colors.darkBackground)
             }
         }
         .sheet(isPresented: $showAddItemSheet) {
@@ -343,24 +287,7 @@ struct FavoriteItemCell: View {
     }
 }
 
-struct TabBarButton: View {
-    let icon: String
-    let text: String
-    var isSelected: Bool = false
-    
-    var body: some View {
-        VStack(spacing: 4) {
-            Image(systemName: icon)
-                .font(.system(size: 20))
-                .foregroundColor(isSelected ? Constants.Colors.primaryPurple : .white.opacity(0.7))
-            
-            Text(text)
-                .font(.system(size: 12))
-                .foregroundColor(isSelected ? Constants.Colors.primaryPurple : .white.opacity(0.7))
-        }
-        .frame(maxWidth: .infinity)
-    }
-}
+// TabBarButton moved to Components/TabBarButton.swift
 
 struct QuickActionCard: View {
     let title: String

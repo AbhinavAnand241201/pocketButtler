@@ -2,9 +2,12 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
-        span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+    var showTabBar: Bool = true
+    @State private var position: MapCameraPosition = .region(
+        MKCoordinateRegion(
+            center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
+            span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        )
     )
     
     // Sample locations for preview
@@ -26,35 +29,42 @@ struct MapView: View {
             
             VStack(spacing: 0) {
                 // Map
-                Map(coordinateRegion: $region, annotationItems: itemLocations) { item in
-                    MapAnnotation(coordinate: item.coordinate) {
-                        Button(action: {
-                            selectedItem = item
-                            showItemDetails = true
-                        }) {
-                            VStack {
-                                ZStack {
-                                    Circle()
-                                        .fill(Constants.Colors.primaryPurple)
-                                        .frame(width: 45, height: 45)
-                                        .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
+                Map(position: $position) {
+                    ForEach(itemLocations) { item in
+                        Annotation(item.name, coordinate: item.coordinate) {
+                            Button(action: {
+                                selectedItem = item
+                                showItemDetails = true
+                            }) {
+                                VStack {
+                                    ZStack {
+                                        Circle()
+                                            .fill(Constants.Colors.primaryPurple)
+                                            .frame(width: 45, height: 45)
+                                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
+                                        
+                                        Image(item.imageName)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 30, height: 30)
+                                            .clipShape(Circle())
+                                    }
                                     
-                                    Image(item.imageName)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 30, height: 30)
-                                        .clipShape(Circle())
+                                    Text(item.name)
+                                        .font(.system(size: 12, weight: .bold))
+                                        .foregroundColor(.white)
+                                        .padding(4)
+                                        .background(Constants.Colors.darkBackground.opacity(0.8))
+                                        .cornerRadius(4)
                                 }
-                                
-                                Text(item.name)
-                                    .font(.system(size: 12, weight: .bold))
-                                    .foregroundColor(.white)
-                                    .padding(4)
-                                    .background(Constants.Colors.darkBackground.opacity(0.8))
-                                    .cornerRadius(4)
                             }
                         }
                     }
+                }
+                .mapStyle(.standard)
+                .mapControls {
+                    MapCompass()
+                    MapScaleView()
                 }
                 .ignoresSafeArea(edges: .top)
                 
@@ -73,9 +83,11 @@ struct MapView: View {
                                     
                                     // Center map on selected item
                                     withAnimation {
-                                        region = MKCoordinateRegion(
-                                            center: item.coordinate,
-                                            span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                                        position = .region(
+                                            MKCoordinateRegion(
+                                                center: item.coordinate,
+                                                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                                            )
                                         )
                                     }
                                 }) {
@@ -109,68 +121,10 @@ struct MapView: View {
                 .padding()
                 .background(Constants.Colors.darkBackground)
                 
-                // Tab bar
-                HStack {
-                    TabBarButton(
-                        icon: "house.fill",
-                        text: "Home"
-                    )
-                    .onTapGesture {
-                        // Navigate to Home View
-                        if let window = UIApplication.shared.windows.first {
-                            window.rootViewController = UIHostingController(rootView: MainTabView(selectedTab: 0))
-                        }
-                    }
-                    
-                    TabBarButton(
-                        icon: "person.2.fill",
-                        text: "Shared"
-                    )
-                    .onTapGesture {
-                        // Navigate to Shared Household View
-                        if let window = UIApplication.shared.windows.first {
-                            window.rootViewController = UIHostingController(rootView: MainTabView(selectedTab: 1))
-                        }
-                    }
-                    
-                    // Center button (add)
-                    Button(action: {
-                        // Show add item sheet
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(Constants.Colors.primaryPurple)
-                                .frame(width: 56, height: 56)
-                                .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
-                            
-                            Image(systemName: "plus")
-                                .font(.system(size: 24, weight: .bold))
-                                .foregroundColor(.white)
-                        }
-                    }
-                    .offset(y: -20)
-                    
-                    TabBarButton(
-                        icon: "map.fill",
-                        text: "Map",
-                        isSelected: true
-                    )
-                    
-                    TabBarButton(
-                        icon: "gearshape.fill",
-                        text: "Settings"
-                    )
-                    .onTapGesture {
-                        // Navigate to Settings View
-                        if let window = UIApplication.shared.windows.first {
-                            window.rootViewController = UIHostingController(rootView: MainTabView(selectedTab: 4))
-                        }
-                    }
+                // Only show tab bar if needed (not when used in MainTabView)
+                if showTabBar {
+                    Spacer()
                 }
-                .padding(.horizontal)
-                .padding(.top, 8)
-                .padding(.bottom, 4)
-                .background(Constants.Colors.darkBackground)
             }
         }
         .navigationTitle("Map")

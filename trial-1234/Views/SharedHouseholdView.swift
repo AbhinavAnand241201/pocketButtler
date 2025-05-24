@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SharedHouseholdView: View {
     @State private var showAddMemberSheet = false
-    @State private var selectedTab = 1
+    var showTabBar: Bool = true
     
     // Sample data for preview with proper image names
     let members = [
@@ -136,84 +136,16 @@ struct SharedHouseholdView: View {
                 .foregroundColor(.white)
                 .padding()
                 
-                // Tab bar
-                HStack {
-                    Button(action: {
-                        selectedTab = 0
-                    }) {
-                        TabBarButton(
-                            icon: "house.fill",
-                            text: "Home",
-                            isSelected: selectedTab == 0
-                        )
-                    }
-                    
-                    Button(action: {
-                        selectedTab = 1
-                    }) {
-                        TabBarButton(
-                            icon: "person.2.fill",
-                            text: "Shared",
-                            isSelected: selectedTab == 1
-                        )
-                    }
-                    
-                    // Center button (add)
-                    Button(action: {
-                        // Show add item sheet
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(Constants.Colors.primaryPurple)
-                                .frame(width: 56, height: 56)
-                                .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
-                            
-                            Image(systemName: "plus")
-                                .font(.system(size: 24, weight: .bold))
-                                .foregroundColor(.white)
-                        }
-                    }
-                    .offset(y: -20)
-                    
-                    Button(action: {
-                        selectedTab = 3
-                    }) {
-                        TabBarButton(
-                            icon: "map.fill",
-                            text: "Map",
-                            isSelected: selectedTab == 3
-                        )
-                    }
-                    
-                    Button(action: {
-                        selectedTab = 4
-                    }) {
-                        TabBarButton(
-                            icon: "gearshape.fill",
-                            text: "Settings",
-                            isSelected: selectedTab == 4
-                        )
-                    }
+                // Only show tab bar if needed (not when used in MainTabView)
+                if showTabBar {
+                    Spacer()
                 }
-                .padding(.horizontal)
-                .padding(.top, 8)
-                .padding(.bottom, 4)
-                .background(Constants.Colors.darkBackground)
             }
         }
         .navigationTitle("Shared Household")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showAddMemberSheet) {
             AddMemberView()
-        }
-        .fullScreenCover(isPresented: .constant(selectedTab != 1)) {
-            if selectedTab == 0 {
-                HomeView()
-            } else if selectedTab == 3 {
-                MapView()
-            } else if selectedTab == 4 {
-                SettingsView()
-            }
         }
     }
 }
