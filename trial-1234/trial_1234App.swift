@@ -8,10 +8,11 @@
 import SwiftUI
 
 @main
-struct trial_1234App: App {
+struct PocketButlerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .preferredColorScheme(.dark)
         }
     }
 }

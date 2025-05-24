@@ -8,14 +8,32 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var authViewModel = AuthViewModel()
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack {
+            // Background
+            Constants.Colors.darkBackground
+                .ignoresSafeArea()
+            
+            // App flow
+            if !hasCompletedOnboarding {
+                OnboardingView()
+                    .onDisappear {
+                        hasCompletedOnboarding = true
+                    }
+            } else if authViewModel.isAuthenticated {
+                MainTabView()
+            } else {
+                LoginView()
+            }
         }
-        .padding()
+        .preferredColorScheme(.dark)
+        .onAppear {
+            // Check if user is already logged in
+            authViewModel.checkAuthStatus()
+        }
     }
 }
 
