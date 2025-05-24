@@ -2,7 +2,7 @@ import Foundation
 import Combine
 
 // Empty response for DELETE operations
-struct EmptyResponse: Decodable {}
+fileprivate struct ItemEmptyResponse: Decodable {}
 
 class ItemViewModel: ObservableObject {
     @Published var items: [Item] = []
@@ -172,7 +172,7 @@ class ItemViewModel: ObservableObject {
             if case .failure(let error) = completion {
                 self?.error = "Failed to delete item: \(error.localizedDescription)"
             }
-        } receiveValue: { [weak self] (_: EmptyResponse) in
+        } receiveValue: { [weak self] (_: ItemEmptyResponse) in
             // Remove the item from the local array
             self?.items.removeAll { $0.id == item.id }
             self?.favoriteItems.removeAll { $0.id == item.id }

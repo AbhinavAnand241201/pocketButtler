@@ -12,8 +12,8 @@ struct ItemDetailsView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     )
     
-    // This would be passed in from the parent view
-    let item: Item = Item(
+    // Default item for previews and testing
+    private static let defaultItem = Item(
         id: "123",
         name: "House Keys",
         location: "Kitchen Counter",
@@ -23,6 +23,13 @@ struct ItemDetailsView: View {
         isFavorite: true,
         coordinates: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194)
     )
+    
+    // Item can be passed in or use the default
+    let item: Item
+    
+    init(item: Item = ItemDetailsView.defaultItem) {
+        self.item = item
+    }
     
     var body: some View {
         ScrollView {

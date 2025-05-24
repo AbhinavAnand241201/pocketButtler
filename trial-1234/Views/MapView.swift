@@ -131,7 +131,7 @@ struct MapView: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showItemDetails) {
             if let selectedItem = selectedItem {
-                ItemDetailsView(item: selectedItem)
+                MapItemDetailsView(item: selectedItem)
             }
         }
     }
@@ -145,7 +145,7 @@ struct ItemLocation: Identifiable {
     let coordinate: CLLocationCoordinate2D
 }
 
-struct ItemDetailsView: View {
+struct MapItemDetailsView: View {
     let item: ItemLocation
     @Environment(\.presentationMode) var presentationMode
     
