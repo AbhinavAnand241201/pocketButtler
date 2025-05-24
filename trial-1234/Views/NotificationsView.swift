@@ -49,25 +49,11 @@ struct NotificationsView: View {
                 VStack(spacing: 0) {
                     // Filter tabs
                     HStack {
-                        Text("All")
-                            .font(.system(size: Constants.FontSizes.body, weight: .bold))
-                            .foregroundColor(.white)
-                            .padding(.vertical, 12)
-                            .padding(.horizontal, 16)
-                            .background(Constants.Colors.primaryPurple)
-                            .cornerRadius(Constants.Dimensions.cornerRadius)
+                        FilterTabButton(title: "All", isSelected: true)
                         
-                        Text("Reminders")
-                            .font(.system(size: Constants.FontSizes.body))
-                            .foregroundColor(.white.opacity(0.7))
-                            .padding(.vertical, 12)
-                            .padding(.horizontal, 16)
+                        FilterTabButton(title: "Reminders", isSelected: false)
                         
-                        Text("Activity")
-                            .font(.system(size: Constants.FontSizes.body))
-                            .foregroundColor(.white.opacity(0.7))
-                            .padding(.vertical, 12)
-                            .padding(.horizontal, 16)
+                        FilterTabButton(title: "Activity", isSelected: false)
                         
                         Spacer()
                     }
@@ -188,18 +174,20 @@ struct NotificationRow: View {
             // Icon
             ZStack {
                 Circle()
-                    .fill(notification.type.color.opacity(0.2))
-                    .frame(width: 40, height: 40)
+                    .fill(notification.type.color.opacity(0.3))
+                    .frame(width: 45, height: 45)
+                    .shadow(color: notification.type.color.opacity(0.4), radius: 4, x: 0, y: 2)
                 
                 Image(systemName: notification.type.icon)
+                    .font(.system(size: 20, weight: .semibold))
                     .foregroundColor(notification.type.color)
             }
             
             // Content
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
                 HStack {
                     Text(notification.title)
-                        .font(.system(size: Constants.FontSizes.body, weight: notification.isRead ? .regular : .bold))
+                        .font(.system(size: Constants.FontSizes.body + 2, weight: notification.isRead ? .semibold : .bold))
                         .foregroundColor(.white)
                     
                     if !notification.isRead {
@@ -212,18 +200,55 @@ struct NotificationRow: View {
                 }
                 
                 Text(notification.description)
-                    .font(.system(size: Constants.FontSizes.caption))
-                    .foregroundColor(.white.opacity(0.7))
+                    .font(.system(size: Constants.FontSizes.caption + 1, weight: .medium))
+                    .foregroundColor(.white.opacity(0.8))
                 
                 Text(notification.time)
                     .font(.system(size: Constants.FontSizes.caption))
+                    .fontWeight(.semibold)
                     .foregroundColor(Constants.Colors.lightPurple)
                     .padding(.top, 4)
             }
         }
         .padding()
-        .background(notification.isRead ? Constants.Colors.lightBackground : Constants.Colors.lightBackground.opacity(0.7))
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    notification.isRead ? Constants.Colors.lightBackground : Constants.Colors.lightBackground.opacity(0.9),
+                    notification.isRead ? Constants.Colors.lightBackground.opacity(0.8) : Constants.Colors.lightBackground.opacity(0.7)
+                ]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
         .cornerRadius(Constants.Dimensions.cornerRadius)
+        .overlay(
+            RoundedRectangle(cornerRadius: Constants.Dimensions.cornerRadius)
+                .stroke(notification.type.color.opacity(notification.isRead ? 0.1 : 0.3), lineWidth: 1)
+        )
+        .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+        .transition(.scale.combined(with: .opacity))
+        .animation(.spring(), value: notification.isRead)
+    }
+}
+
+struct FilterTabButton: View {
+    let title: String
+    let isSelected: Bool
+    
+    var body: some View {
+        Text(title)
+            .font(.system(size: Constants.FontSizes.body, weight: isSelected ? .bold : .medium))
+            .foregroundColor(isSelected ? .white : .white.opacity(0.7))
+            .padding(.vertical, 12)
+            .padding(.horizontal, 16)
+            .background(isSelected ? Constants.Colors.primaryPurple : Color.clear)
+            .cornerRadius(Constants.Dimensions.cornerRadius)
+            .overlay(
+                RoundedRectangle(cornerRadius: Constants.Dimensions.cornerRadius)
+                    .stroke(isSelected ? Color.clear : Constants.Colors.lightPurple.opacity(0.3), lineWidth: 1)
+                    .opacity(isSelected ? 0 : 1)
+            )
     }
 }
 

@@ -17,6 +17,8 @@ struct Constants {
         static let primaryPurple = Color(hex: "6A5ACD")
         static let lightPurple = Color(hex: "A8A8FF")
         static let peach = Color(hex: "FFE5D9")
+        static let teal = Color(hex: "20B2AA")
+        static let orange = Color(hex: "FFA500")
     }
     
     // Dimensions

@@ -15,11 +15,13 @@ struct HomeView: View {
             VStack(spacing: 0) {
                 // Header with greeting and avatar
                 HStack {
-                    // Avatar
-                    Image(systemName: "person.crop.circle.fill")
+                    // Maya's profile picture
+                    Image("shh1") // Using one of the profile images from assets
                         .resizable()
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(Constants.Colors.primaryPurple)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 45, height: 45)
+                        .clipShape(Circle())
+                        .overlay(Circle().stroke(Constants.Colors.primaryPurple, lineWidth: 2))
                     
                     // Greeting
                     VStack(alignment: .leading) {
@@ -85,40 +87,46 @@ struct HomeView: View {
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .padding()
                         } else if itemViewModel.items.isEmpty {
-                            Text("No items found")
-                                .foregroundColor(.white.opacity(0.7))
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .padding()
+                            // Show car keys as a recent item
+                            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                                RecentItemCell(
+                                    name: "Car Keys",
+                                    location: "Living Room",
+                                    timeAgo: "5 min ago",
+                                    image: "keys"
+                                )
+                            }
+                            .padding(.horizontal)
                         } else {
                             // Grid of items
                             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
                                 // Sample items for preview
-                                ItemGridCell(
+                                RecentItemCell(
                                     name: "Wallet",
                                     location: "Bedroom",
                                     timeAgo: "2 hours ago",
-                                    backgroundColor: Constants.Colors.peach
+                                    image: "wallet"
                                 )
                                 
-                                ItemGridCell(
+                                RecentItemCell(
                                     name: "Keys",
                                     location: "Kitchen",
                                     timeAgo: "5 hours ago",
-                                    backgroundColor: Constants.Colors.lightPurple.opacity(0.3)
+                                    image: "keys"
                                 )
                                 
-                                ItemGridCell(
+                                RecentItemCell(
                                     name: "Phone",
                                     location: "Office",
                                     timeAgo: "3 days ago",
-                                    backgroundColor: Constants.Colors.peach
+                                    image: "phone"
                                 )
                                 
-                                ItemGridCell(
-                                    name: "Laptop",
-                                    location: "Cafe",
+                                RecentItemCell(
+                                    name: "Passport",
+                                    location: "Safe",
                                     timeAgo: "1 day ago",
-                                    backgroundColor: Constants.Colors.peach
+                                    image: "passport"
                                 )
                             }
                             .padding(.horizontal)
@@ -134,20 +142,59 @@ struct HomeView: View {
                             .padding(.horizontal)
                         
                         ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 16) {
+                            HStack(spacing: 20) {
                                 FavoriteItemCell(
                                     name: "Glasses",
-                                    location: "Desk"
+                                    location: "Desk",
+                                    image: "glasses"
                                 )
                                 
                                 FavoriteItemCell(
                                     name: "Passport",
-                                    location: "Safe"
+                                    location: "Safe",
+                                    image: "passport"
                                 )
                                 
                                 FavoriteItemCell(
                                     name: "AirPods",
-                                    location: "Backpack"
+                                    location: "Backpack",
+                                    image: "earpods"
+                                )
+                            }
+                            .padding(.horizontal)
+                        }
+                    }
+                    .padding(.top, Constants.Dimensions.standardPadding * 2)
+                    
+                    // Quick Actions section with animations
+                    VStack(alignment: .leading, spacing: Constants.Dimensions.standardPadding) {
+                        Text("Quick Actions")
+                            .font(.system(size: Constants.FontSizes.title, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(.horizontal)
+                        
+                        // Animated quick action cards
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 16) {
+                                QuickActionCard(
+                                    title: "Find Nearby",
+                                    description: "Locate items around you",
+                                    icon: "location.fill",
+                                    color: Constants.Colors.teal
+                                )
+                                
+                                QuickActionCard(
+                                    title: "Last Seen",
+                                    description: "View item history",
+                                    icon: "clock.fill",
+                                    color: Constants.Colors.peach
+                                )
+                                
+                                QuickActionCard(
+                                    title: "Share Item",
+                                    description: "With household members",
+                                    icon: "person.2.fill",
+                                    color: Constants.Colors.primaryPurple
                                 )
                             }
                             .padding(.horizontal)
@@ -168,6 +215,12 @@ struct HomeView: View {
                         icon: "person.2.fill",
                         text: "Shared"
                     )
+                    .onTapGesture {
+                        // Navigate to Shared Household View
+                        if let window = UIApplication.shared.windows.first {
+                            window.rootViewController = UIHostingController(rootView: MainTabView(selectedTab: 1))
+                        }
+                    }
                     
                     // Center button (add)
                     Button(action: {
@@ -190,11 +243,23 @@ struct HomeView: View {
                         icon: "map.fill",
                         text: "Map"
                     )
+                    .onTapGesture {
+                        // Navigate to Map View
+                        if let window = UIApplication.shared.windows.first {
+                            window.rootViewController = UIHostingController(rootView: MainTabView(selectedTab: 3))
+                        }
+                    }
                     
                     TabBarButton(
                         icon: "gearshape.fill",
                         text: "Settings"
                     )
+                    .onTapGesture {
+                        // Navigate to Settings View
+                        if let window = UIApplication.shared.windows.first {
+                            window.rootViewController = UIHostingController(rootView: MainTabView(selectedTab: 4))
+                        }
+                    }
                 }
                 .padding(.horizontal)
                 .padding(.top, 8)
@@ -216,25 +281,25 @@ struct HomeView: View {
 
 // MARK: - Supporting Views
 
-struct ItemGridCell: View {
+struct RecentItemCell: View {
     let name: String
     let location: String
     let timeAgo: String
-    let backgroundColor: Color
+    let image: String
     
     var body: some View {
         VStack(alignment: .leading) {
-            // Image placeholder
-            RoundedRectangle(cornerRadius: 12)
-                .fill(backgroundColor)
-                .aspectRatio(1.0, contentMode: .fit)
+            // Actual image
+            Image(image)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(height: 120)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
                 .overlay(
-                    Image(systemName: "bag.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(.white.opacity(0.7))
-                        .padding(24)
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
                 )
+                .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
             
             // Item details
             Text(name)
@@ -252,19 +317,18 @@ struct ItemGridCell: View {
 struct FavoriteItemCell: View {
     let name: String
     let location: String
+    let image: String
     
     var body: some View {
         VStack(alignment: .center) {
-            // Icon
-            ZStack {
-                Circle()
-                    .fill(Constants.Colors.lightBackground)
-                    .frame(width: 60, height: 60)
-                
-                Image(systemName: "star.fill")
-                    .font(.system(size: 24))
-                    .foregroundColor(Constants.Colors.primaryPurple)
-            }
+            // Actual image
+            Image(image)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 60, height: 60)
+                .clipShape(Circle())
+                .overlay(Circle().stroke(Constants.Colors.primaryPurple, lineWidth: 2))
+                .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
             
             // Text
             Text(name)
@@ -295,6 +359,62 @@ struct TabBarButton: View {
                 .foregroundColor(isSelected ? Constants.Colors.primaryPurple : .white.opacity(0.7))
         }
         .frame(maxWidth: .infinity)
+    }
+}
+
+struct QuickActionCard: View {
+    let title: String
+    let description: String
+    let icon: String
+    let color: Color
+    
+    @State private var isHovering = false
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Icon
+            ZStack {
+                Circle()
+                    .fill(color.opacity(0.2))
+                    .frame(width: 50, height: 50)
+                
+                Image(systemName: icon)
+                    .font(.system(size: 24))
+                    .foregroundColor(color)
+            }
+            
+            // Text
+            Text(title)
+                .font(.system(size: Constants.FontSizes.body, weight: .bold))
+                .foregroundColor(.white)
+            
+            Text(description)
+                .font(.system(size: Constants.FontSizes.caption))
+                .foregroundColor(.white.opacity(0.7))
+                .lineLimit(2)
+        }
+        .padding(16)
+        .frame(width: 160, height: 160)
+        .background(Constants.Colors.lightBackground)
+        .cornerRadius(16)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(color.opacity(isHovering ? 0.8 : 0.3), lineWidth: 2)
+        )
+        .shadow(color: color.opacity(isHovering ? 0.4 : 0.1), radius: isHovering ? 8 : 4, x: 0, y: isHovering ? 4 : 2)
+        .scaleEffect(isHovering ? 1.05 : 1.0)
+        .onTapGesture {
+            withAnimation(.spring()) {
+                isHovering.toggle()
+                
+                // Reset after a delay
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    withAnimation(.spring()) {
+                        isHovering = false
+                    }
+                }
+            }
+        }
     }
 }
 

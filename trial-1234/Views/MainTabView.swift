@@ -1,8 +1,12 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @State private var selectedTab = 0
+    @State private var selectedTab: Int
     @State private var showAddItemSheet = false
+    
+    init(selectedTab: Int = 0) {
+        _selectedTab = State(initialValue: selectedTab)
+    }
     
     var body: some View {
         ZStack(alignment: .bottom) {
