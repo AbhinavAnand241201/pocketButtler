@@ -394,5 +394,6 @@ struct EditItemView: View {
 #Preview {
     NavigationView {
         ItemDetailsView()
+            .environmentObject(PreviewItemViewModel())
     }
 }
