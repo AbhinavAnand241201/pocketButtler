@@ -141,9 +141,9 @@ struct AddItemView: View {
                 }
             }
             .photosPicker(isPresented: $showImagePicker, selection: $photoPickerItem, matching: .images)
-            .onChange(of: photoPickerItem) { _ in
+            .onChange(of: photoPickerItem) { oldValue, newValue in
                 Task(priority: .userInitiated) {
-                    if let data = try? await photoPickerItem?.loadTransferable(type: Data.self),
+                    if let data = try? await newValue?.loadTransferable(type: Data.self),
                        let uiImage = UIImage(data: data) {
                         selectedImage = uiImage
                     }

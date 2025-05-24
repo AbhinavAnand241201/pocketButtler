@@ -2,7 +2,11 @@ import SwiftUI
 
 struct RemindersView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State private var reminders: [Reminder] = []
+    @State private var reminders: [Reminder] = [] {
+        didSet {
+            saveReminders()
+        }
+    }
     @State private var showAddReminderSheet = false
     
     var body: some View {
@@ -53,8 +57,10 @@ struct RemindersView: View {
                     // List of reminders
                     VStack {
                         List {
-                            ForEach(reminders) { reminder in
-                                ReminderCell(reminder: reminder)
+                            ForEach($reminders) { $reminder in
+                                ReminderCell(reminder: $reminder) {
+                                    saveReminders()
+                                }
                             }
                             .onDelete(perform: deleteReminder)
                         }
@@ -94,13 +100,31 @@ struct RemindersView: View {
                 }
             }
             .onAppear {
-                loadSampleReminders()
+                loadReminders()
             }
         }
     }
     
     private func deleteReminder(at offsets: IndexSet) {
         reminders.remove(atOffsets: offsets)
+    }
+    
+    private func saveReminders() {
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(reminders) {
+            UserDefaults.standard.set(data, forKey: "reminders")
+        }
+    }
+    
+    private func loadReminders() {
+        if let data = UserDefaults.standard.data(forKey: "reminders"),
+           let savedReminders = try? JSONDecoder().decode([Reminder].self, from: data) {
+            reminders = savedReminders
+        } else {
+            #if DEBUG
+            loadSampleReminders()
+            #endif
+        }
     }
     
     private func loadSampleReminders() {
@@ -112,7 +136,18 @@ struct RemindersView: View {
     }
 }
 
-struct Reminder: Identifiable {
+struct Reminder: Identifiable, Codable, Equatable {
+    static func == (lhs: Reminder, rhs: Reminder) -> Bool {
+        lhs.id == rhs.id &&
+        lhs.title == rhs.title &&
+        lhs.itemName == rhs.itemName &&
+        lhs.time == rhs.time &&
+        lhs.isLocationBased == rhs.isLocationBased &&
+        lhs.location == rhs.location &&
+        lhs.isRepeating == rhs.isRepeating &&
+        lhs.repeatDays == rhs.repeatDays &&
+        lhs.isEnabled == rhs.isEnabled
+    }
     let id: String
     let title: String
     let itemName: String
@@ -121,10 +156,12 @@ struct Reminder: Identifiable {
     let location: String?
     let isRepeating: Bool
     let repeatDays: [Int] // 1-7 for days of week
+    var isEnabled: Bool = true
 }
 
 struct ReminderCell: View {
-    let reminder: Reminder
+    @Binding var reminder: Reminder
+    let onToggle: () -> Void
     
     var body: some View {
         HStack(spacing: Constants.Dimensions.standardPadding) {
@@ -169,8 +206,11 @@ struct ReminderCell: View {
             Spacer()
             
             // Toggle
-            Toggle("", isOn: .constant(true))
-                .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.primaryPurple))
+            Toggle("", isOn: $reminder.isEnabled)
+                .onChange(of: reminder.isEnabled) { _ in
+                    onToggle()
+                }
+            .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.primaryPurple))
         }
         .padding()
         .background(Constants.Colors.lightBackground)

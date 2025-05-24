@@ -85,7 +85,7 @@ class ItemViewModel: ObservableObject {
                         self?.error = "Failed to fetch items: \(error.localizedDescription)"
                         
                         // Load cached items if available
-                        self?.loadCachedItems()
+                        _ = self?.loadCachedItems()
                     }
                 } receiveValue: { [weak self] (fetchedItems: [Item]) in
                     self?.items = fetchedItems

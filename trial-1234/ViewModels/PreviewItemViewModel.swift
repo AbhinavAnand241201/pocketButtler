@@ -8,7 +8,7 @@ class PreviewItemViewModel: ItemViewModel {
     // No need to redeclare published properties as they're inherited from ItemViewModel
     
     // Override the isPreview property
-    override var isPreview: Bool {
+    var isPreview: Bool {
         return true
     }
     
