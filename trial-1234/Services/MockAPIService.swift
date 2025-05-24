@@ -2,6 +2,18 @@ import Foundation
 import Combine
 import CoreLocation
 import MapKit
+import SwiftUI
+
+// Define APIError for the mock service
+enum APIError: Error {
+    case invalidURL
+    case invalidResponse
+    case requestFailed(Error)
+    case decodingFailed(Error)
+    case unauthorized
+    case serverError(Int)
+    case unknown
+}
 
 // Mock API service for previews
 class MockAPIService {
