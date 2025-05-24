@@ -10,7 +10,8 @@ struct AddItemView: View {
     @State private var showImagePicker = false
     @State private var photoPickerItem: PhotosPickerItem?
     @State private var isFavorite = false
-    @State private var item: Item? = nil
+    // No need for this state variable as we're creating a new item directly
+    // @State private var item: Item? = nil
     
     var body: some View {
         NavigationView {
