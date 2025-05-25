@@ -10,8 +10,7 @@ struct AddItemView: View {
     @State private var showImagePicker = false
     @State private var photoPickerItem: PhotosPickerItem?
     @State private var isFavorite = false
-    // No need for this state variable as we're creating a new item directly
-    // @State private var item: Item? = nil
+    @State private var item: Item? = nil
     
     var body: some View {
         NavigationView {
@@ -141,9 +140,9 @@ struct AddItemView: View {
                 }
             }
             .photosPicker(isPresented: $showImagePicker, selection: $photoPickerItem, matching: .images)
-            .onChange(of: photoPickerItem) { oldValue, newValue in
+            .onChange(of: photoPickerItem) { _ in
                 Task(priority: .userInitiated) {
-                    if let data = try? await newValue?.loadTransferable(type: Data.self),
+                    if let data = try? await photoPickerItem?.loadTransferable(type: Data.self),
                        let uiImage = UIImage(data: data) {
                         selectedImage = uiImage
                     }

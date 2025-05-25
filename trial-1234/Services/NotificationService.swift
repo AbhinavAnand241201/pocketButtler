@@ -2,7 +2,6 @@ import Foundation
 import UserNotifications
 import CoreLocation
 import SwiftUI
-import MapKit
 
 class NotificationService: NSObject, CLLocationManagerDelegate {
     static let shared = NotificationService()

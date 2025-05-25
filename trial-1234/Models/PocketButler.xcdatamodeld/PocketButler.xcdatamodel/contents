@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="24.4.0" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CachedItem" representedClassName="CachedItem" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String"/>
+        <attribute name="isFavorite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="location" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="ownerId" attributeType="String"/>
+        <attribute name="photoUrl" optional="YES" attributeType="String"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="syncStatus" attributeType="String" defaultValueString="synced"/>
+    </entity>
+    <entity name="CachedReminder" representedClassName="CachedReminder" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String"/>
+        <attribute name="isEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="isLocationBased" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isRepeating" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="itemName" attributeType="String"/>
+        <attribute name="location" optional="YES" attributeType="String"/>
+        <attribute name="repeatDays" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Int]"/>
+        <attribute name="syncStatus" attributeType="String" defaultValueString="synced"/>
+        <attribute name="time" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="title" attributeType="String"/>
+    </entity>
+    <entity name="CachedUser" representedClassName="CachedUser" syncable="YES" codeGenerationType="class">
+        <attribute name="email" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="isPremium" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="syncStatus" attributeType="String" defaultValueString="synced"/>
+    </entity>
+</model> 

@@ -1,0 +1,404 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -scheme trial-1234 -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 16 Pro" clean build
+
+Build settings from command line:
+    SDKROOT = iphonesimulator18.4
+
+ComputePackagePrebuildTargetDependencyGraph
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+** CLEAN SUCCEEDED **
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (1 target)
+    Target 'trial-1234' in project 'trial-1234' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/momc --dry-run --action generate --swift-version 5.0 --sdkroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk --iphonesimulator-deployment-target 18.4 --module trial_1234 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/PocketButler.xcdatamodeld /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 02129795ff8fde8099521113b097d8e0
+Build description path: /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/XCBuildData/02129795ff8fde8099521113b097d8e0.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk /Users/abhinavanand/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.4-22E235-71825a6d136aa4733edcbe86ece5525b.sdkstatcache
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk -o /Users/abhinavanand/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.4-22E235-71825a6d136aa4733edcbe86ece5525b.sdkstatcache
+
+CreateBuildDirectory /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234.xcodeproj
+    builtin-create-build-directory /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex
+
+CreateBuildDirectory /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234.xcodeproj
+    builtin-create-build-directory /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products
+
+CreateBuildDirectory /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234.xcodeproj
+    builtin-create-build-directory /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator
+
+CreateBuildDirectory /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234.xcodeproj
+    builtin-create-build-directory /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234-dee83715708c747ffa91eeca01d2f735-VFS-iphonesimulator/all-product-headers.yaml
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234.xcodeproj
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234-dee83715708c747ffa91eeca01d2f735-VFS-iphonesimulator/all-product-headers.yaml
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-project-headers.hmap (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-project-headers.hmap
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234.DependencyMetadataFileList (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234.hmap (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234.hmap
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-own-target-headers.hmap (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-generated-files.hmap (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-generated-files.hmap
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234.DependencyStaticMetadataFileList (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-all-target-headers.hmap (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-all-non-framework-target-headers.hmap (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-DebugDylibPath-normal-arm64.txt (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-DebugDylibPath-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-DebugDylibInstallName-normal-arm64.txt (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-DebugDylibInstallName-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/empty-trial-1234.plist (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/empty-trial-1234.plist
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234_const_extract_protocols.json (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234.SwiftFileList (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234.SwiftFileList
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234.SwiftConstValuesFileList (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234.LinkFileList (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234.LinkFileList
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234-OutputFileMap.json (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/Entitlements-Simulated.plist (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    write-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/Entitlements-Simulated.plist
+
+MkDir /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator/trial-1234.app (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    /bin/mkdir -p /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator/trial-1234.app
+
+ProcessProductPackaging "" /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234.app-Simulated.xcent (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+    Entitlements:
+    
+    {
+    "application-identifier" = "Y4GRLGKNQ9.com.AbhinavAnand.trial-1234";
+}
+    
+    builtin-productPackagingUtility -entitlements -format xml -o /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234.app-Simulated.xcent
+
+ProcessProductPackagingDER /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234.app-Simulated.xcent /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234.app-Simulated.xcent.der (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    /usr/bin/derq query -f xml -i /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234.app-Simulated.xcent -o /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234.app-Simulated.xcent.der --raw
+
+Ld /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator/trial-1234.app/__preview.dylib normal (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios18.4-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk -O0 -L/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator -F/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator -install_name @rpath/trial-1234.debug.dylib -dead_strip -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234_dependency_info.dat -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234.app-Simulated.xcent.der -Xlinker -no_adhoc_codesign -o /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator/trial-1234.app/__preview.dylib
+
+MkDir /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/assetcatalog_output/unthinned (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    /bin/mkdir -p /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/assetcatalog_output/unthinned
+
+GenerateAssetSymbols /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Assets.xcassets (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Assets.xcassets --compile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator/trial-1234.app --output-format human-readable-text --notices --warnings --export-dependency-info /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/assetcatalog_dependencies --output-partial-info-plist /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/assetcatalog_generated_info.plist --app-icon AppIcon --accent-color AccentColor --compress-pngs --enable-on-demand-resources YES --development-region en --target-device iphone --target-device ipad --minimum-deployment-target 18.4 --platform iphonesimulator --bundle-identifier com.AbhinavAnand.trial-1234 --generate-swift-asset-symbols /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/GeneratedAssetSymbols.swift --generate-objc-asset-symbols /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/GeneratedAssetSymbols.h --generate-asset-symbol-index /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/* com.apple.actool.compilation-results */
+/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/GeneratedAssetSymbols.h
+/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/GeneratedAssetSymbols.swift
+
+
+MkDir /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/assetcatalog_output/thinned (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    /bin/mkdir -p /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/assetcatalog_output/thinned
+
+DataModelCompile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator/trial-1234.app/ /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/PocketButler.xcdatamodeld (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    /Applications/Xcode.app/Contents/Developer/usr/bin/momc --sdkroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk --iphonesimulator-deployment-target 18.4 --module trial_1234 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/PocketButler.xcdatamodeld /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator/trial-1234.app/
+PocketButler.xcdatamodel: note: Model PocketButler version checksum: kAIM/2ZoA3lx6f4uFYbWr9Uv3si4hOlOdH0L25UqsmY=
+
+DataModelCodegen /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/PocketButler.xcdatamodeld (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    /Applications/Xcode.app/Contents/Developer/usr/bin/momc --action generate --swift-version 5.0 --sdkroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk --iphonesimulator-deployment-target 18.4 --module trial_1234 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/PocketButler.xcdatamodeld /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler
+
+CompileAssetCatalogVariant thinned /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator/trial-1234.app /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Assets.xcassets (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Assets.xcassets --compile /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/assetcatalog_output/thinned --output-format human-readable-text --notices --warnings --export-dependency-info /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/assetcatalog_dependencies_thinned --output-partial-info-plist /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/assetcatalog_generated_info.plist_thinned --app-icon AppIcon --accent-color AccentColor --compress-pngs --enable-on-demand-resources YES --filter-for-thinning-device-configuration iPhone17,1 --filter-for-device-os-version 18.4 --development-region en --target-device iphone --target-device ipad --minimum-deployment-target 18.4 --platform iphonesimulator
+
+SwiftDriver trial-1234 normal arm64 com.apple.xcode.tools.swift.compiler (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name trial_1234 -Onone -enforce-exclusivity\=checked @/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk -target arm64-apple-ios18.4-simulator -g -module-cache-path /Users/abhinavanand/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Index.noindex/DataStore -swift-version 5 -I /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator -F /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64 -c -j8 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/abhinavanand/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.4-22E235-71825a6d136aa4733edcbe86ece5525b.sdkstatcache -output-file-map /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial_1234.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234_const_extract_protocols.json -Xcc -iquote -Xcc /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-generated-files.hmap -Xcc -I/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-own-target-headers.hmap -Xcc -I/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-all-target-headers.hmap -Xcc -iquote -Xcc /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-project-headers.hmap -Xcc -I/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources-normal/arm64 -Xcc -I/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/arm64 -Xcc -I/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial_1234-Swift.h -working-directory /Users/abhinavanand/Downloads/BootcampLearning/trial-1234 -experimental-emit-module-separately -disable-cmo
+
+SwiftCompile normal arm64 Compiling\ RemindersView.swift,\ SettingsView.swift,\ LoginView.swift,\ VoiceLoginView.swift,\ MainTabView.swift,\ trial_1234App.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/RemindersView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/SettingsView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/LoginView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/VoiceLoginView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/MainTabView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/trial_1234App.swift (in target 'trial-1234' from project 'trial-1234')
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/RemindersView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/SettingsView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/LoginView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/VoiceLoginView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/MainTabView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/trial_1234App.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ trial_1234 (in target 'trial-1234' from project 'trial-1234')
+Failed frontend command:
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -emit-module -experimental-skip-non-inlinable-function-bodies-without-types /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/CategoriesView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Services/CoreDataManager.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ViewModels/PreviewItemViewModel.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/Reminder.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Services/NotificationService.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ViewModels/ItemViewModel.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/RemindersView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/SettingsView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/LoginView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/VoiceLoginView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/MainTabView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/trial_1234App.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/MapView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Utilities/Constants.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/Item.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/ForgotPasswordView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ViewModels/AuthViewModel.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ViewModels/ReminderViewModel.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/ItemDetailsView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Services/APIService.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ViewModels/CategoryViewModel.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/SharedHouseholdView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Services/NetworkMonitor.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Services/MockAPIService.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/NotificationsView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/WidgetView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/AddItemView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/Components/TabBarButton.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ContentView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/OnboardingView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/StatisticsView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/PocketButlerApp.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/User.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/Household.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/HistoryView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/PanicModeView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Utilities/Extensions.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/HomeView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/ProfileView.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedItem+CoreDataClass.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedItem+CoreDataProperties.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedReminder+CoreDataClass.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedReminder+CoreDataProperties.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedUser+CoreDataClass.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedUser+CoreDataProperties.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/PocketButler+CoreDataModel.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/GeneratedAssetSymbols.swift -target arm64-apple-ios18.4-simulator -Xllvm -aarch64-use-tbi -enable-objc-interop -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk -I /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator -F /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator -no-color-diagnostics -enable-testing -g -debug-info-format\=dwarf -dwarf-version\=5 -module-cache-path /Users/abhinavanand/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -swift-version 5 -enforce-exclusivity\=checked -Onone -D DEBUG -serialize-debugging-options -const-gather-protocols-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234_const_extract_protocols.json -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -empty-abi-descriptor -validate-clang-modules-once -clang-build-session-file /Users/abhinavanand/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /Users/abhinavanand/Downloads/BootcampLearning/trial-1234 -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift -enable-anonymous-context-mangled-names -file-compilation-dir /Users/abhinavanand/Downloads/BootcampLearning/trial-1234 -Xcc -ivfsstatcache -Xcc /Users/abhinavanand/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.4-22E235-71825a6d136aa4733edcbe86ece5525b.sdkstatcache -Xcc -I/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/swift-overrides.hmap -Xcc -iquote -Xcc /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-generated-files.hmap -Xcc -I/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-own-target-headers.hmap -Xcc -I/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-all-target-headers.hmap -Xcc -iquote -Xcc /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/trial-1234-project-headers.hmap -Xcc -I/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources-normal/arm64 -Xcc -I/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/arm64 -Xcc -I/Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources -Xcc -DDEBUG\=1 -module-name trial_1234 -frontend-parseable-output -disable-clang-spi -target-sdk-version 18.4 -target-sdk-name iphonesimulator18.4 -external-plugin-path /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server -external-plugin-path /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/local/lib/swift/host/plugins\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server -in-process-plugin-server-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/lib/swift/host/plugins -emit-module-doc-path /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial_1234.swiftdoc -emit-module-source-info-path /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial_1234.swiftsourceinfo -emit-objc-header-path /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial_1234-Swift.h -serialize-diagnostics-path /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234-master-emit-module.dia -emit-dependencies-path /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial-1234-master-emit-module.d -o /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial_1234.swiftmodule -emit-abi-descriptor-path /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/Objects-normal/arm64/trial_1234.abi.json
+
+EmitSwiftModule normal arm64 (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+/Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ViewModels/PreviewItemViewModel.swift:15:14: error: initializer does not override a designated initializer from its superclass
+    override init() {
+    ~~~~~~~~ ^
+/Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/trial_1234App.swift:11:8: error: invalid redeclaration of 'PocketButlerApp'
+struct PocketButlerApp: App {
+       ^
+/Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/PocketButlerApp.swift:4:8: note: 'PocketButlerApp' previously declared here
+struct PocketButlerApp: App {
+       ^
+/Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/PocketButlerApp.swift:4:8: note: 'PocketButlerApp' previously declared here
+struct PocketButlerApp: App {
+       ^
+/Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/trial_1234App.swift:10:1: error: 'main' attribute can only apply to one type in a module
+@main
+^
+/Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/PocketButlerApp.swift:3:1: error: 'main' attribute can only apply to one type in a module
+@main
+^
+
+SwiftCompile normal arm64 Compiling\ ItemDetailsView.swift,\ APIService.swift,\ CategoryViewModel.swift,\ SharedHouseholdView.swift,\ NetworkMonitor.swift,\ MockAPIService.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/ItemDetailsView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Services/APIService.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ViewModels/CategoryViewModel.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/SharedHouseholdView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Services/NetworkMonitor.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Services/MockAPIService.swift (in target 'trial-1234' from project 'trial-1234')
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/ItemDetailsView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Services/APIService.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ViewModels/CategoryViewModel.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/SharedHouseholdView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Services/NetworkMonitor.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Services/MockAPIService.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 Compiling\ Extensions.swift,\ HomeView.swift,\ ProfileView.swift,\ CachedItem+CoreDataClass.swift,\ CachedItem+CoreDataProperties.swift,\ CachedReminder+CoreDataClass.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Utilities/Extensions.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/HomeView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/ProfileView.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedItem+CoreDataClass.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedItem+CoreDataProperties.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedReminder+CoreDataClass.swift (in target 'trial-1234' from project 'trial-1234')
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Utilities/Extensions.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/HomeView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/ProfileView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedItem+CoreDataClass.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedItem+CoreDataProperties.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedReminder+CoreDataClass.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 Compiling\ NotificationsView.swift,\ WidgetView.swift,\ AddItemView.swift,\ TabBarButton.swift,\ ContentView.swift,\ OnboardingView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/NotificationsView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/WidgetView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/AddItemView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/Components/TabBarButton.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ContentView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/OnboardingView.swift (in target 'trial-1234' from project 'trial-1234')
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/NotificationsView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/WidgetView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/AddItemView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/Components/TabBarButton.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ContentView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/OnboardingView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 Compiling\ MapView.swift,\ Constants.swift,\ Item.swift,\ ForgotPasswordView.swift,\ AuthViewModel.swift,\ ReminderViewModel.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/MapView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Utilities/Constants.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/Item.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/ForgotPasswordView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ViewModels/AuthViewModel.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ViewModels/ReminderViewModel.swift (in target 'trial-1234' from project 'trial-1234')
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/MapView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Utilities/Constants.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/Item.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/ForgotPasswordView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ViewModels/AuthViewModel.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ViewModels/ReminderViewModel.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 Compiling\ CachedReminder+CoreDataProperties.swift,\ CachedUser+CoreDataClass.swift,\ CachedUser+CoreDataProperties.swift,\ PocketButler+CoreDataModel.swift,\ GeneratedAssetSymbols.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedReminder+CoreDataProperties.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedUser+CoreDataClass.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedUser+CoreDataProperties.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/PocketButler+CoreDataModel.swift /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'trial-1234' from project 'trial-1234')
+
+SwiftCompile normal arm64 /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedReminder+CoreDataProperties.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedUser+CoreDataClass.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/CachedUser+CoreDataProperties.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/CoreDataGenerated/PocketButler/PocketButler+CoreDataModel.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Library/Developer/Xcode/DerivedData/trial-1234-gqhwnpxpshcvldczhqhcvanbckci/Build/Intermediates.noindex/trial-1234.build/Debug-iphonesimulator/trial-1234.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 Compiling\ StatisticsView.swift,\ PocketButlerApp.swift,\ User.swift,\ Household.swift,\ HistoryView.swift,\ PanicModeView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/StatisticsView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/PocketButlerApp.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/User.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/Household.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/HistoryView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/PanicModeView.swift (in target 'trial-1234' from project 'trial-1234')
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/StatisticsView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/PocketButlerApp.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/User.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/Household.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/HistoryView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftCompile normal arm64 /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/PanicModeView.swift (in target 'trial-1234' from project 'trial-1234')
+    cd /Users/abhinavanand/Downloads/BootcampLearning/trial-1234
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling CachedReminder+CoreDataProperties.swift, CachedUser+CoreDataClass.swift, CachedUser+CoreDataProperties.swift, PocketButler+CoreDataModel.swift, GeneratedAssetSymbols.swift (in target 'trial-1234' from project 'trial-1234')
+
+SwiftCompile normal arm64 Compiling\ CategoriesView.swift,\ CoreDataManager.swift,\ PreviewItemViewModel.swift,\ Reminder.swift,\ NotificationService.swift,\ ItemViewModel.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Views/CategoriesView.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Services/CoreDataManager.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ViewModels/PreviewItemViewModel.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Models/Reminder.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/Services/NotificationService.swift /Users/abhinavanand/Downloads/BootcampLearning/trial-1234/trial-1234/ViewModels/ItemViewModel.swift (in target 'trial-1234' from project 'trial-1234')
+Command SwiftCompile failed with a nonzero exit code
+

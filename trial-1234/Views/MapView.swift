@@ -31,7 +31,7 @@ struct MapView: View {
                 // Map
                 Map(position: $position) {
                     ForEach(itemLocations) { item in
-                        Annotation(coordinate: item.coordinate) {
+                        Annotation(item.name, coordinate: item.coordinate) {
                             Button(action: {
                                 selectedItem = item
                                 showItemDetails = true
@@ -58,8 +58,6 @@ struct MapView: View {
                                         .cornerRadius(4)
                                 }
                             }
-                        } label: {
-                            Text(item.name)
                         }
                     }
                 }
@@ -84,11 +82,14 @@ struct MapView: View {
                                     showItemDetails = true
                                     
                                     // Center map on selected item
-                                    // Update map position to focus on this item
-                                    position = .region(MKCoordinateRegion(
-                                        center: item.coordinate,
-                                        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-                                    ))
+                                    withAnimation {
+                                        position = .region(
+                                            MKCoordinateRegion(
+                                                center: item.coordinate,
+                                                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                                            )
+                                        )
+                                    }
                                 }) {
                                     VStack(alignment: .leading) {
                                         // Actual image
@@ -130,7 +131,7 @@ struct MapView: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showItemDetails) {
             if let selectedItem = selectedItem {
-                MapItemDetailsView(item: selectedItem)
+                ItemDetailsView(item: selectedItem)
             }
         }
     }
@@ -144,7 +145,7 @@ struct ItemLocation: Identifiable {
     let coordinate: CLLocationCoordinate2D
 }
 
-struct MapItemDetailsView: View {
+struct ItemDetailsView: View {
     let item: ItemLocation
     @Environment(\.presentationMode) var presentationMode
     

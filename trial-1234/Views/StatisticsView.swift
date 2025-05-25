@@ -24,7 +24,7 @@ struct StatisticsView: View {
                         }
                         .pickerStyle(SegmentedPickerStyle())
                         .padding(.horizontal)
-                        .onChange(of: selectedPeriod) { oldValue, newValue in
+                        .onChange(of: selectedPeriod) { _ in
                             loadStatistics()
                         }
                         

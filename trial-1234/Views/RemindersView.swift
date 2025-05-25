@@ -136,18 +136,7 @@ struct RemindersView: View {
     }
 }
 
-struct Reminder: Identifiable, Codable, Equatable {
-    static func == (lhs: Reminder, rhs: Reminder) -> Bool {
-        lhs.id == rhs.id &&
-        lhs.title == rhs.title &&
-        lhs.itemName == rhs.itemName &&
-        lhs.time == rhs.time &&
-        lhs.isLocationBased == rhs.isLocationBased &&
-        lhs.location == rhs.location &&
-        lhs.isRepeating == rhs.isRepeating &&
-        lhs.repeatDays == rhs.repeatDays &&
-        lhs.isEnabled == rhs.isEnabled
-    }
+struct Reminder: Identifiable, Codable {
     let id: String
     let title: String
     let itemName: String
@@ -206,10 +195,13 @@ struct ReminderCell: View {
             Spacer()
             
             // Toggle
-            Toggle("", isOn: $reminder.isEnabled)
-                .onChange(of: reminder.isEnabled) { _ in
+            Toggle("", isOn: Binding(
+                get: { reminder.isEnabled },
+                set: { newValue in
+                    reminder.isEnabled = newValue
                     onToggle()
-                }
+                })
+            )
             .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.primaryPurple))
         }
         .padding()

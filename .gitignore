@@ -93,7 +93,7 @@ iOSInjectionProject/
 .DS_Store
 
 # Documentation files (local only)
-appDetails.md
-architecture.md
-frontendDetails.md
-tasks.md
+# appDetails.md
+# architecture.md
+# frontendDetails.md
+# tasks.md

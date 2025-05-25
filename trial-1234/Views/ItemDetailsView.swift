@@ -3,7 +3,7 @@ import MapKit
 
 struct ItemDetailsView: View {
     @Environment(\.presentationMode) var presentationMode
-    @StateObject private var itemViewModel: ItemViewModel
+    @StateObject private var itemViewModel = ItemViewModel()
     @State private var showEditSheet = false
     @State private var showShareSheet = false
     @State private var showDeleteConfirmation = false
@@ -12,25 +12,16 @@ struct ItemDetailsView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     )
     
-    // Default item for previews and testing
-    private static let defaultItem = Item(
+    // This would be passed in from the parent view
+    let item: Item = Item(
         id: "123",
         name: "House Keys",
         location: "Kitchen Counter",
-        ownerId: "user123",
-        timestamp: Date().addingTimeInterval(-3600),
         photoUrl: nil,
         isFavorite: true,
+        timestamp: Date().addingTimeInterval(-3600),
         coordinates: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194)
     )
-    
-    // Item can be passed in or use the default
-    let item: Item
-    
-    init(item: Item = ItemDetailsView.defaultItem, viewModel: ItemViewModel = ItemViewModel()) {
-        self.item = item
-        _itemViewModel = StateObject(wrappedValue: viewModel)
-    }
     
     var body: some View {
         ScrollView {
@@ -109,15 +100,17 @@ struct ItemDetailsView: View {
                                 .font(.system(size: Constants.FontSizes.body, weight: .medium))
                                 .foregroundColor(.white)
                             
-                            Map(initialPosition: .region(MKCoordinateRegion(
-                                center: coordinates,
-                                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-                            ))) {
-                                Marker("Item Location", coordinate: coordinates)
-                                    .tint(Constants.Colors.primaryPurple)
+                            Map(coordinateRegion: $selectedMapRegion, annotationItems: [MapAnnotation(coordinate: coordinates)]) { annotation in
+                                MapMarker(coordinate: annotation.coordinate, tint: Constants.Colors.primaryPurple)
                             }
                             .frame(height: 200)
                             .cornerRadius(Constants.Dimensions.cornerRadius)
+                            .onAppear {
+                                selectedMapRegion = MKCoordinateRegion(
+                                    center: coordinates,
+                                    span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                                )
+                            }
                         }
                     }
                     
@@ -247,7 +240,15 @@ struct MapAnnotation: Identifiable {
     let coordinate: CLLocationCoordinate2D
 }
 
-// Using the Item model from Models/Item.swift
+struct Item: Identifiable {
+    let id: String
+    let name: String
+    let location: String
+    let photoUrl: String?
+    let isFavorite: Bool
+    let timestamp: Date
+    let coordinates: CLLocationCoordinate2D?
+}
 
 struct ItemHistoryEntry: Identifiable {
     let id: String
@@ -301,8 +302,6 @@ struct EditItemView: View {
     @State private var itemName: String
     @State private var itemLocation: String
     @State private var isFavorite: Bool
-    @State private var latitude: Double?
-    @State private var longitude: Double?
     
     let item: Item
     
@@ -311,8 +310,6 @@ struct EditItemView: View {
         _itemName = State(initialValue: item.name)
         _itemLocation = State(initialValue: item.location)
         _isFavorite = State(initialValue: item.isFavorite)
-        _latitude = State(initialValue: item.latitude)
-        _longitude = State(initialValue: item.longitude)
     }
     
     var body: some View {
@@ -392,6 +389,6 @@ struct EditItemView: View {
 
 #Preview {
     NavigationView {
-        ItemDetailsView(viewModel: PreviewItemViewModel())
+        ItemDetailsView()
     }
 }
