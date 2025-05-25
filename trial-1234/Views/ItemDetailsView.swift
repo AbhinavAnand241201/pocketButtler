@@ -3,7 +3,7 @@ import MapKit
 
 struct ItemDetailsView: View {
     @Environment(\.presentationMode) var presentationMode
-    @StateObject private var itemViewModel = ItemViewModel()
+    @ObservedObject var itemViewModel: ItemViewModel
     @State private var showEditSheet = false
     @State private var showShareSheet = false
     @State private var showDeleteConfirmation = false
@@ -12,16 +12,12 @@ struct ItemDetailsView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     )
     
-    // This would be passed in from the parent view
-    let item: Item = Item(
-        id: "123",
-        name: "House Keys",
-        location: "Kitchen Counter",
-        photoUrl: nil,
-        isFavorite: true,
-        timestamp: Date().addingTimeInterval(-3600),
-        coordinates: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194)
-    )
+    let item: Item
+    
+    init(item: Item, itemViewModel: ItemViewModel = ItemViewModel()) {
+        self.item = item
+        self.itemViewModel = itemViewModel
+    }
     
     var body: some View {
         ScrollView {
@@ -93,26 +89,7 @@ struct ItemDetailsView: View {
                             .foregroundColor(.white)
                     }
                     
-                    // Map view
-                    if let coordinates = item.coordinates {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Location on Map")
-                                .font(.system(size: Constants.FontSizes.body, weight: .medium))
-                                .foregroundColor(.white)
-                            
-                            Map(coordinateRegion: $selectedMapRegion, annotationItems: [MapAnnotation(coordinate: coordinates)]) { annotation in
-                                MapMarker(coordinate: annotation.coordinate, tint: Constants.Colors.primaryPurple)
-                            }
-                            .frame(height: 200)
-                            .cornerRadius(Constants.Dimensions.cornerRadius)
-                            .onAppear {
-                                selectedMapRegion = MKCoordinateRegion(
-                                    center: coordinates,
-                                    span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-                                )
-                            }
-                        }
-                    }
+                    // Map view (removed, as Item no longer has coordinates)
                     
                     // Action buttons
                     HStack(spacing: Constants.Dimensions.standardPadding) {
@@ -217,7 +194,7 @@ struct ItemDetailsView: View {
             Text("Are you sure you want to delete this item? This action cannot be undone.")
         }
         .sheet(isPresented: $showEditSheet) {
-            EditItemView(item: item)
+            EditItemView(item: item, viewModel: itemViewModel)
         }
     }
     
@@ -238,16 +215,6 @@ struct ItemDetailsView: View {
 struct MapAnnotation: Identifiable {
     let id = UUID()
     let coordinate: CLLocationCoordinate2D
-}
-
-struct Item: Identifiable {
-    let id: String
-    let name: String
-    let location: String
-    let photoUrl: String?
-    let isFavorite: Bool
-    let timestamp: Date
-    let coordinates: CLLocationCoordinate2D?
 }
 
 struct ItemHistoryEntry: Identifiable {
@@ -304,9 +271,11 @@ struct EditItemView: View {
     @State private var isFavorite: Bool
     
     let item: Item
+    @ObservedObject var viewModel: ItemViewModel
     
-    init(item: Item) {
+    init(item: Item, viewModel: ItemViewModel) {
         self.item = item
+        self.viewModel = viewModel
         _itemName = State(initialValue: item.name)
         _itemLocation = State(initialValue: item.location)
         _isFavorite = State(initialValue: item.isFavorite)
@@ -388,7 +357,31 @@ struct EditItemView: View {
 }
 
 #Preview {
-    NavigationView {
-        ItemDetailsView()
+    let sampleItem = Item(
+        id: "123",
+        name: "House Keys",
+        location: "Kitchen Counter",
+        ownerId: "owner-1",
+        timestamp: Date().addingTimeInterval(-3600),
+        photoUrl: nil,
+        isFavorite: true
+    )
+    return NavigationView {
+        ItemDetailsView(item: sampleItem, itemViewModel: ItemViewModel())
+    }
+}
+
+#Preview {
+    let sampleItem = Item(
+        id: "123",
+        name: "House Keys",
+        location: "Kitchen Counter",
+        ownerId: "owner-1",
+        timestamp: Date().addingTimeInterval(-3600),
+        photoUrl: nil,
+        isFavorite: true
+    )
+    return NavigationView {
+        EditItemView(item: sampleItem, viewModel: ItemViewModel())
     }
 }

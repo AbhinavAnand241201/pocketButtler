@@ -1,6 +1,14 @@
 import SwiftUI
 import MapKit
 
+struct ItemLocation: Identifiable {
+    let id: String
+    let name: String
+    let location: String
+    let imageName: String
+    let coordinate: CLLocationCoordinate2D
+}
+
 struct MapView: View {
     var showTabBar: Bool = true
     @State private var position: MapCameraPosition = .region(
@@ -131,155 +139,29 @@ struct MapView: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showItemDetails) {
             if let selectedItem = selectedItem {
-                ItemDetailsView(item: selectedItem)
-            }
-        }
-    }
-}
-
-struct ItemLocation: Identifiable {
-    let id: String
-    let name: String
-    let location: String
-    let imageName: String
-    let coordinate: CLLocationCoordinate2D
-}
-
-struct ItemDetailsView: View {
-    let item: ItemLocation
-    @Environment(\.presentationMode) var presentationMode
-    
-    var body: some View {
-        NavigationView {
-            ZStack {
-                Constants.Colors.darkBackground
-                    .ignoresSafeArea()
-                
-                VStack(spacing: Constants.Dimensions.standardPadding) {
-                    // Item image
-                    ZStack {
-                        RoundedRectangle(cornerRadius: Constants.Dimensions.cornerRadius)
-                            .fill(Constants.Colors.peach)
-                            .aspectRatio(1.5, contentMode: .fit)
-                        
-                        Image(systemName: "bag.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundColor(.white.opacity(0.7))
-                            .padding(40)
-                    }
-                    
-                    // Item details
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(item.name)
-                            .font(.system(size: Constants.FontSizes.title, weight: .bold))
-                            .foregroundColor(.white)
-                        
-                        HStack {
-                            Image(systemName: "mappin.and.ellipse")
-                                .foregroundColor(Constants.Colors.lightPurple)
-                            
-                            Text(item.location)
-                                .font(.system(size: Constants.FontSizes.body))
-                                .foregroundColor(Constants.Colors.lightPurple)
-                        }
-                        
-                        HStack {
-                            Image(systemName: "clock")
-                                .foregroundColor(Constants.Colors.lightPurple)
-                            
-                            Text("Last updated 2 hours ago")
-                                .font(.system(size: Constants.FontSizes.body))
-                                .foregroundColor(Constants.Colors.lightPurple)
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
-                    .background(Constants.Colors.lightBackground)
-                    .cornerRadius(Constants.Dimensions.cornerRadius)
-                    
-                    // Actions
-                    HStack(spacing: 16) {
-                        // Edit button
-                        Button(action: {
-                            // Edit item logic
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            VStack {
-                                Image(systemName: "pencil")
-                                    .font(.system(size: 24))
-                                    .foregroundColor(.white)
-                                
-                                Text("Edit")
-                                    .font(.system(size: Constants.FontSizes.caption))
-                                    .foregroundColor(.white)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Constants.Colors.lightBackground)
-                            .cornerRadius(Constants.Dimensions.cornerRadius)
-                        }
-                        
-                        // Share button
-                        Button(action: {
-                            // Share item logic
-                        }) {
-                            VStack {
-                                Image(systemName: "square.and.arrow.up")
-                                    .font(.system(size: 24))
-                                    .foregroundColor(.white)
-                                
-                                Text("Share")
-                                    .font(.system(size: Constants.FontSizes.caption))
-                                    .foregroundColor(.white)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Constants.Colors.lightBackground)
-                            .cornerRadius(Constants.Dimensions.cornerRadius)
-                        }
-                        
-                        // Delete button
-                        Button(action: {
-                            // Delete item logic
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            VStack {
-                                Image(systemName: "trash")
-                                    .font(.system(size: 24))
-                                    .foregroundColor(.white)
-                                
-                                Text("Delete")
-                                    .font(.system(size: Constants.FontSizes.caption))
-                                    .foregroundColor(.white)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.red.opacity(0.8))
-                            .cornerRadius(Constants.Dimensions.cornerRadius)
-                        }
-                    }
-                    
-                    Spacer()
-                }
-                .padding()
-                .navigationTitle(item.name)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Image(systemName: "xmark")
-                                .foregroundColor(.white)
-                        }
-                    }
-                }
+                // Create a dummy Item from ItemLocation for preview
+                let dummyItem = Item(
+                    id: selectedItem.id,
+                    name: selectedItem.name,
+                    location: selectedItem.location,
+                    ownerId: "preview-owner",
+                    timestamp: Date(),
+                    photoUrl: nil,
+                    isFavorite: false
+                )
+                ItemDetailsView(item: dummyItem, itemViewModel: ItemViewModel())
             }
         }
     }
 }
 
 #Preview {
-    MapView()
+    let sampleItem = ItemLocation(
+        id: "1",
+        name: "Keys",
+        location: "Living Room",
+        imageName: "keys",
+        coordinate: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194)
+    )
+    return MapView()
 }

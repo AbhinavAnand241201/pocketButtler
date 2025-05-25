@@ -1,6 +1,10 @@
 import Network
 import Foundation
 
+extension Notification.Name {
+    static let networkStatusChanged = Notification.Name("networkStatusChanged")
+}
+
 class NetworkMonitor {
     static let shared = NetworkMonitor()
     

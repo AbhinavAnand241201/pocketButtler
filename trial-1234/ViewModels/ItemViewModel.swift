@@ -225,4 +225,32 @@ class ItemViewModel: ObservableObject {
             return nil
         }
     }
+    
+    // Delete an item
+    func deleteItem(_ item: Item) {
+        isLoading = true
+        error = nil
+        
+        apiService.request(
+            endpoint: "\(Constants.API.itemsEndpoint)/\(item.id)",
+            method: "DELETE"
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] completion in
+            self?.isLoading = false
+            
+            if case .failure(let error) = completion {
+                self?.error = "Failed to delete item: \(error.localizedDescription)"
+            } else {
+                // Remove from local items and update cache
+                self?.items.removeAll { $0.id == item.id }
+                self?.favoriteItems.removeAll { $0.id == item.id }
+                self?.cacheItems(self?.items ?? [])
+                
+                // Cancel any pending notifications for this item
+                NotificationService.shared.cancelNotification(for: item.id)
+            }
+        } receiveValue: { (_: EmptyResponse) in }
+        .store(in: &cancellables)
+    }
 }

@@ -12,13 +12,37 @@ struct Reminder: Identifiable, Codable, Equatable {
         lhs.repeatDays == rhs.repeatDays &&
         lhs.isEnabled == rhs.isEnabled
     }
-    let id: String
-    let title: String
-    let itemName: String
-    let time: Date
-    let isLocationBased: Bool
-    let location: String?
-    let isRepeating: Bool
-    let repeatDays: [Int] // 1-7 for days of week
-    var isEnabled: Bool = true
+    var id: String
+    var title: String
+    var itemName: String
+    var time: Date
+    var isLocationBased: Bool
+    var location: String?
+    var isRepeating: Bool
+    var repeatDays: [Int] // 1-7 for days of week
+    var isEnabled: Bool
+    
+    init(id: String = UUID().uuidString, 
+         title: String, 
+         itemName: String, 
+         time: Date, 
+         isLocationBased: Bool, 
+         location: String?, 
+         isRepeating: Bool, 
+         repeatDays: [Int], 
+         isEnabled: Bool = true) {
+        self.id = id
+        self.title = title
+        self.itemName = itemName
+        self.time = time
+        self.isLocationBased = isLocationBased
+        self.location = location
+        self.isRepeating = isRepeating
+        self.repeatDays = repeatDays
+        self.isEnabled = isEnabled
+    }
+    
+    mutating func toggleEnabled() {
+        isEnabled.toggle()
+    }
 } 

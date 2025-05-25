@@ -147,7 +147,7 @@ class CoreDataManager {
             cachedReminder.isLocationBased = reminder.isLocationBased
             cachedReminder.location = reminder.location
             cachedReminder.isRepeating = reminder.isRepeating
-            cachedReminder.repeatDays = reminder.repeatDays as NSArray
+            cachedReminder.repeatDays = reminder.repeatDays
             cachedReminder.isEnabled = reminder.isEnabled
             cachedReminder.syncStatus = "synced"
             
@@ -169,7 +169,7 @@ class CoreDataManager {
                     cachedReminder.isLocationBased = reminder.isLocationBased
                     cachedReminder.location = reminder.location
                     cachedReminder.isRepeating = reminder.isRepeating
-                    cachedReminder.repeatDays = reminder.repeatDays as NSArray
+                    cachedReminder.repeatDays = reminder.repeatDays
                     cachedReminder.isEnabled = reminder.isEnabled
                     cachedReminder.syncStatus = "synced"
                     
@@ -213,7 +213,7 @@ class CoreDataManager {
                     isLocationBased: cachedReminder.isLocationBased,
                     location: cachedReminder.location,
                     isRepeating: cachedReminder.isRepeating,
-                    repeatDays: (cachedReminder.repeatDays as? [Int]) ?? [],
+                    repeatDays: cachedReminder.repeatDays ?? [],
                     isEnabled: cachedReminder.isEnabled
                 )
             }
@@ -268,8 +268,8 @@ class CoreDataManager {
             if let cachedUser = results.first {
                 return User(
                     id: cachedUser.id ?? "",
-                    name: cachedUser.name ?? "",
                     email: cachedUser.email ?? "",
+                    name: cachedUser.name ?? "",
                     isPremium: cachedUser.isPremium
                 )
             }
@@ -317,6 +317,46 @@ class CoreDataManager {
                 }
             } catch {
                 print("Error marking item as synced: \(error)")
+            }
+        }
+    }
+    
+    // MARK: - Reminder Sync Operations
+    func getUnsyncedReminders() -> [Reminder] {
+        let fetchRequest: NSFetchRequest<CachedReminder> = CachedReminder.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "syncStatus != %@", "synced")
+        do {
+            let cachedReminders = try viewContext.fetch(fetchRequest)
+            return cachedReminders.map { cachedReminder in
+                Reminder(
+                    id: cachedReminder.id ?? "",
+                    title: cachedReminder.title ?? "",
+                    itemName: cachedReminder.itemName ?? "",
+                    time: cachedReminder.time ?? Date(),
+                    isLocationBased: cachedReminder.isLocationBased,
+                    location: cachedReminder.location,
+                    isRepeating: cachedReminder.isRepeating,
+                    repeatDays: cachedReminder.repeatDays ?? [],
+                    isEnabled: cachedReminder.isEnabled
+                )
+            }
+        } catch {
+            print("Error fetching unsynced reminders: \(error)")
+            return []
+        }
+    }
+    func markReminderAsSynced(id: String) {
+        backgroundContext.perform {
+            let fetchRequest: NSFetchRequest<CachedReminder> = CachedReminder.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+            do {
+                let results = try self.backgroundContext.fetch(fetchRequest)
+                if let cachedReminder = results.first {
+                    cachedReminder.syncStatus = "synced"
+                    self.saveBackgroundContext()
+                }
+            } catch {
+                print("Error marking reminder as synced: \(error)")
             }
         }
     }

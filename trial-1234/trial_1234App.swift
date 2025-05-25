@@ -1,18 +1,22 @@
-//
-//  trial_1234App.swift
-//  trial-1234
-//
-//  Created by ABHINAV ANAND  on 24/05/25.
-//
-
 import SwiftUI
 
 @main
-struct PocketButlerApp: App {
+struct trial_1234App: App {
+    @StateObject private var authViewModel = AuthViewModel()
+    @StateObject private var itemViewModel = ItemViewModel()
+    @StateObject private var reminderViewModel = ReminderViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .preferredColorScheme(.dark)
+            if authViewModel.isAuthenticated {
+                MainTabView()
+                    .environmentObject(authViewModel)
+                    .environmentObject(itemViewModel)
+                    .environmentObject(reminderViewModel)
+            } else {
+                OnboardingView()
+                    .environmentObject(authViewModel)
+            }
         }
     }
 }

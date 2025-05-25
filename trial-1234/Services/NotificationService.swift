@@ -97,4 +97,10 @@ class NotificationService: NSObject, CLLocationManagerDelegate {
         print("Monitoring failed for region with identifier: \(region?.identifier ?? "unknown")")  
         print("Error: \(error.localizedDescription)")
     }
+    
+    // Cancel pending notification for a specific item
+    func cancelNotification(for itemId: String) {
+        let identifiers = ["item-reminder-\(itemId)"]
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: identifiers)
+    }
 }

@@ -1,13 +1,11 @@
 import SwiftUI
+import UserNotifications
 
 struct RemindersView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State private var reminders: [Reminder] = [] {
-        didSet {
-            saveReminders()
-        }
-    }
+    @StateObject private var viewModel = RemindersViewModel()
     @State private var showAddReminderSheet = false
+    @State private var isFirstAppear = true
     
     var body: some View {
         NavigationView {
@@ -16,7 +14,7 @@ struct RemindersView: View {
                 Constants.Colors.darkBackground
                     .ignoresSafeArea()
                 
-                if reminders.isEmpty {
+                if viewModel.reminders.isEmpty {
                     // Empty state
                     VStack(spacing: Constants.Dimensions.standardPadding * 2) {
                         Spacer()
@@ -57,12 +55,12 @@ struct RemindersView: View {
                     // List of reminders
                     VStack {
                         List {
-                            ForEach($reminders) { $reminder in
-                                ReminderCell(reminder: $reminder) {
-                                    saveReminders()
+                            ForEach(viewModel.reminders.indices, id: \.self) { index in
+                                ReminderCell(reminder: $viewModel.reminders[index]) {
+                                    viewModel.toggleReminder(viewModel.reminders[index])
                                 }
                             }
-                            .onDelete(perform: deleteReminder)
+                            .onDelete(perform: viewModel.deleteReminder)
                         }
                         .listStyle(PlainListStyle())
                         .background(Constants.Colors.darkBackground)
@@ -96,61 +94,44 @@ struct RemindersView: View {
             }
             .sheet(isPresented: $showAddReminderSheet) {
                 AddReminderView { newReminder in
-                    reminders.append(newReminder)
+                    viewModel.addReminder(newReminder)
                 }
             }
             .onAppear {
-                loadReminders()
+                if isFirstAppear {
+                    requestNotificationPermission()
+                    isFirstAppear = false
+                }
             }
         }
     }
     
-    private func deleteReminder(at offsets: IndexSet) {
-        reminders.remove(atOffsets: offsets)
-    }
-    
-    private func saveReminders() {
-        let encoder = JSONEncoder()
-        if let data = try? encoder.encode(reminders) {
-            UserDefaults.standard.set(data, forKey: "reminders")
+    private func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { success, error in
+            if success {
+                print("Notification permission granted")
+            } else if let error = error {
+                print("Error requesting notification permission: \(error.localizedDescription)")
+            }
         }
     }
-    
-    private func loadReminders() {
-        if let data = UserDefaults.standard.data(forKey: "reminders"),
-           let savedReminders = try? JSONDecoder().decode([Reminder].self, from: data) {
-            reminders = savedReminders
-        } else {
-            #if DEBUG
-            loadSampleReminders()
-            #endif
-        }
-    }
-    
-    private func loadSampleReminders() {
-        // Sample data for preview
-        reminders = [
-            Reminder(id: "1", title: "Take Keys", itemName: "House Keys", time: Date().addingTimeInterval(3600), isLocationBased: false, location: nil, isRepeating: false, repeatDays: []),
-            Reminder(id: "2", title: "Grab Laptop", itemName: "MacBook Pro", time: Date().addingTimeInterval(7200), isLocationBased: true, location: "When leaving home", isRepeating: true, repeatDays: [1, 2, 3, 4, 5])
-        ]
-    }
-}
-
-struct Reminder: Identifiable, Codable {
-    let id: String
-    let title: String
-    let itemName: String
-    let time: Date
-    let isLocationBased: Bool
-    let location: String?
-    let isRepeating: Bool
-    let repeatDays: [Int] // 1-7 for days of week
-    var isEnabled: Bool = true
 }
 
 struct ReminderCell: View {
     @Binding var reminder: Reminder
     let onToggle: () -> Void
+    
+    private var isEnabledBinding: Binding<Bool> {
+        Binding(
+            get: { reminder.isEnabled },
+            set: { newValue in
+                var updatedReminder = reminder
+                updatedReminder.isEnabled = newValue
+                reminder = updatedReminder
+                onToggle()
+            }
+        )
+    }
     
     var body: some View {
         HStack(spacing: Constants.Dimensions.standardPadding) {
@@ -195,14 +176,8 @@ struct ReminderCell: View {
             Spacer()
             
             // Toggle
-            Toggle("", isOn: Binding(
-                get: { reminder.isEnabled },
-                set: { newValue in
-                    reminder.isEnabled = newValue
-                    onToggle()
-                })
-            )
-            .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.primaryPurple))
+            Toggle("", isOn: isEnabledBinding)
+                .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.primaryPurple))
         }
         .padding()
         .background(Constants.Colors.lightBackground)

@@ -1,6 +1,8 @@
 import Foundation
 import Combine
 import UserNotifications
+import CoreLocation
+import CoreData
 
 class ReminderViewModel: ObservableObject {
     @Published var reminders: [Reminder] = []
@@ -72,7 +74,7 @@ class ReminderViewModel: ObservableObject {
         isLoading = true
         error = nil
         
-        apiService.request(endpoint: .reminders, method: .get)
+        apiService.request(endpoint: "/reminders", method: "GET")
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 self?.isLoading = false
@@ -99,7 +101,18 @@ class ReminderViewModel: ObservableObject {
         scheduleNotification(for: reminder)
         
         // Then try to sync with server
-        apiService.request(endpoint: .reminders, method: .post, body: reminder)
+        let reminderDict: [String: Any] = [
+            "id": reminder.id,
+            "title": reminder.title,
+            "itemName": reminder.itemName,
+            "time": ISO8601DateFormatter().string(from: reminder.time),
+            "isLocationBased": reminder.isLocationBased,
+            "location": reminder.location as Any,
+            "isRepeating": reminder.isRepeating,
+            "repeatDays": reminder.repeatDays,
+            "isEnabled": reminder.isEnabled
+        ]
+        apiService.request(endpoint: "/reminders", method: "POST", body: reminderDict)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {
@@ -122,11 +135,44 @@ class ReminderViewModel: ObservableObject {
         updateNotification(for: reminder)
         
         // Then try to sync with server
-        updateReminderOnServer(reminder)
+        let reminderDict: [String: Any] = [
+            "id": reminder.id,
+            "title": reminder.title,
+            "itemName": reminder.itemName,
+            "time": ISO8601DateFormatter().string(from: reminder.time),
+            "isLocationBased": reminder.isLocationBased,
+            "location": reminder.location as Any,
+            "isRepeating": reminder.isRepeating,
+            "repeatDays": reminder.repeatDays,
+            "isEnabled": reminder.isEnabled
+        ]
+        apiService.request(endpoint: "/reminders", method: "PUT", body: reminderDict)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
+                    self?.error = error.localizedDescription
+                }
+            } receiveValue: { [weak self] (updatedReminder: Reminder) in
+                // Update CoreData with synced reminder
+                CoreDataManager.shared.updateReminder(updatedReminder)
+                self?.loadRemindersFromCache()
+            }
+            .store(in: &cancellables)
     }
     
     private func updateReminderOnServer(_ reminder: Reminder) {
-        apiService.request(endpoint: .reminders, method: .put, body: reminder)
+        let reminderDict: [String: Any] = [
+            "id": reminder.id,
+            "title": reminder.title,
+            "itemName": reminder.itemName,
+            "time": ISO8601DateFormatter().string(from: reminder.time),
+            "isLocationBased": reminder.isLocationBased,
+            "location": reminder.location as Any,
+            "isRepeating": reminder.isRepeating,
+            "repeatDays": reminder.repeatDays,
+            "isEnabled": reminder.isEnabled
+        ]
+        apiService.request(endpoint: "/reminders", method: "PUT", body: reminderDict)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {
@@ -149,7 +195,10 @@ class ReminderViewModel: ObservableObject {
         removeNotification(for: reminder)
         
         // Then try to sync with server
-        apiService.request(endpoint: .reminders, method: .delete, body: reminder)
+        let reminderDict: [String: Any] = [
+            "id": reminder.id
+        ]
+        apiService.request(endpoint: "/reminders", method: "DELETE", body: reminderDict)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {
@@ -160,7 +209,7 @@ class ReminderViewModel: ObservableObject {
                     // Reschedule notification
                     self?.scheduleNotification(for: reminder)
                 }
-            } receiveValue: { _ in
+            } receiveValue: { (_: EmptyResponse) in
                 // Delete successful on server, no need to do anything
             }
             .store(in: &cancellables)
@@ -192,16 +241,10 @@ class ReminderViewModel: ObservableObject {
         var trigger: UNNotificationTrigger?
         
         if reminder.isLocationBased, let location = reminder.location {
-            // Create a geofence trigger
-            let region = CLCircularRegion(
-                center: location.coordinate,
-                radius: 100, // 100 meters radius
-                identifier: reminder.id
-            )
-            region.notifyOnEntry = true
-            region.notifyOnExit = false
-            
-            trigger = UNLocationNotificationTrigger(region: region, repeats: false)
+            // TODO: Convert location string to coordinates using geocoding or a lookup table
+            // For now, skip geofence trigger if coordinates are not available
+            // let region = CLCircularRegion(center: location.coordinate, ...)
+            // trigger = UNLocationNotificationTrigger(region: region, repeats: false)
         } else {
             // Create a time-based trigger
             let components = Calendar.current.dateComponents([.hour, .minute], from: reminder.time)
@@ -234,50 +277,5 @@ class ReminderViewModel: ObservableObject {
     private func removeNotification(for reminder: Reminder) {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [reminder.id])
         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [reminder.id])
-    }
-}
-
-// MARK: - CoreDataManager Extension
-extension CoreDataManager {
-    func getUnsyncedReminders() -> [Reminder] {
-        let fetchRequest: NSFetchRequest<CachedReminder> = CachedReminder.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "syncStatus != %@", "synced")
-        
-        do {
-            let cachedReminders = try viewContext.fetch(fetchRequest)
-            return cachedReminders.map { cachedReminder in
-                Reminder(
-                    id: cachedReminder.id ?? "",
-                    title: cachedReminder.title ?? "",
-                    itemName: cachedReminder.itemName ?? "",
-                    time: cachedReminder.time ?? Date(),
-                    isLocationBased: cachedReminder.isLocationBased,
-                    location: cachedReminder.location,
-                    isRepeating: cachedReminder.isRepeating,
-                    repeatDays: (cachedReminder.repeatDays as? [Int]) ?? [],
-                    isEnabled: cachedReminder.isEnabled
-                )
-            }
-        } catch {
-            print("Error fetching unsynced reminders: \(error)")
-            return []
-        }
-    }
-    
-    func markReminderAsSynced(id: String) {
-        backgroundContext.perform {
-            let fetchRequest: NSFetchRequest<CachedReminder> = CachedReminder.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-            
-            do {
-                let results = try self.backgroundContext.fetch(fetchRequest)
-                if let cachedReminder = results.first {
-                    cachedReminder.syncStatus = "synced"
-                    self.saveBackgroundContext()
-                }
-            } catch {
-                print("Error marking reminder as synced: \(error)")
-            }
-        }
     }
 } 
