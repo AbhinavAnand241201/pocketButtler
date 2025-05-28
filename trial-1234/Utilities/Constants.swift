@@ -10,15 +10,15 @@ struct Constants {
         static let householdEndpoint = "\(baseURL)/household"
     }
     
-    // Colors
+    // Colors - Using Theme.Colors instead of redefining
     struct Colors {
-        static let darkBackground = Color(hex: "1A1A2E")
-        static let lightBackground = Color(hex: "2E2E4A")
-        static let primaryPurple = Color(hex: "6A5ACD")
-        static let lightPurple = Color(hex: "A8A8FF")
-        static let peach = Color(hex: "FFE5D9")
-        static let teal = Color(hex: "20B2AA")
-        static let orange = Color(hex: "FFA500")
+        static let darkBackground = Theme.Colors.cardBackground
+        static let lightBackground = Theme.Colors.cardBackground.opacity(0.7)
+        static let primaryPurple = Theme.Colors.primary
+        static let lightPurple = Theme.Colors.primaryLight
+        static let peach = Theme.Colors.accentLight
+        static let teal = Theme.Colors.accent
+        static let orange = Theme.Colors.accent
     }
     
     // Dimensions
