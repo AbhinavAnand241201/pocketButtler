@@ -24,16 +24,16 @@ struct WidgetView: View {
                 TextField("Item Name", text: $itemName)
                     .font(.system(size: 18))
                     .padding(16)
-                    .background(Color(hex: "2E2E4A"))
-                    .foregroundColor(.white)
+                    .background(Theme.Colors.cardBackground)
+                    .foregroundColor(Theme.Colors.textPrimary)
                     .cornerRadius(Constants.Dimensions.cornerRadius)
                 
                 // Location field
                 TextField("Location", text: $location)
                     .font(.system(size: 18))
                     .padding(16)
-                    .background(Color(hex: "2E2E4A"))
-                    .foregroundColor(.white)
+                    .background(Theme.Colors.cardBackground)
+                    .foregroundColor(Theme.Colors.textPrimary)
                     .cornerRadius(Constants.Dimensions.cornerRadius)
                 
                 // Log Item button
@@ -47,7 +47,7 @@ struct WidgetView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding(16)
-                        .background(Constants.Colors.primaryPurple)
+                        .background(Theme.Colors.primaryButton)
                         .cornerRadius(Constants.Dimensions.buttonCornerRadius)
                 }
                 

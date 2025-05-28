@@ -10,8 +10,7 @@ struct HistoryView: View {
         NavigationView {
             ZStack {
                 // Background
-                Constants.Colors.darkBackground
-                    .ignoresSafeArea()
+                Constants.Colors.BackgroundView()
                 
                 VStack(spacing: 0) {
                     // Search bar
@@ -216,10 +215,10 @@ enum HistoryFilter: CaseIterable {
     
     var color: Color {
         switch self {
-        case .all: return Constants.Colors.primaryPurple
-        case .placed: return Constants.Colors.teal
-        case .moved: return Constants.Colors.orange
-        case .found: return Constants.Colors.lightPurple
+        case .all: return Theme.Colors.primaryButton
+        case .placed: return Theme.Colors.primaryButtonHighlight
+        case .moved: return Theme.Colors.iconDefault
+        case .found: return Theme.Colors.primaryButton.opacity(0.8)
         }
     }
 }
@@ -235,7 +234,7 @@ struct FilterChip: View {
                 .font(.system(size: 14, weight: isSelected ? .bold : .regular))
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
-                .background(isSelected ? Constants.Colors.primaryPurple : Constants.Colors.lightBackground)
+                .background(isSelected ? Constants.Colors.primaryPurple : Constants.Colors.lightBackgroundColor)
                 .foregroundColor(.white)
                 .cornerRadius(20)
         }

@@ -43,8 +43,12 @@ struct NotificationsView: View {
         NavigationView {
             ZStack {
                 // Background
-                Constants.Colors.darkBackground
-                    .ignoresSafeArea()
+                LinearGradient(
+                    gradient: Gradient(colors: [Theme.Colors.backgroundStart, Theme.Colors.backgroundEnd]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
                     // Filter tabs
@@ -69,16 +73,16 @@ struct NotificationsView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 60, height: 60)
-                                .foregroundColor(.white.opacity(0.5))
+                                .foregroundColor(Theme.Colors.textSecondary)
                                 .padding()
                             
                             Text("No Notifications")
                                 .font(.system(size: Constants.FontSizes.title, weight: .bold))
-                                .foregroundColor(.white)
+                                .foregroundColor(Theme.Colors.textPrimary)
                             
                             Text("You don't have any notifications yet")
                                 .font(.system(size: Constants.FontSizes.body))
-                                .foregroundColor(.white.opacity(0.7))
+                                .foregroundColor(Theme.Colors.textSecondary)
                                 .multilineTextAlignment(.center)
                                 .padding()
                             
@@ -88,13 +92,13 @@ struct NotificationsView: View {
                         List {
                             ForEach(notifications) { notification in
                                 NotificationRow(notification: notification)
-                                    .listRowBackground(Constants.Colors.lightBackground)
+                                    .listRowBackground(Theme.Colors.cardBackground)
                                     .listRowSeparator(.hidden)
                                     .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                             }
                         }
                         .listStyle(PlainListStyle())
-                        .background(Constants.Colors.darkBackground)
+                        .background(Theme.Colors.backgroundStart)
                     }
                 }
                 .navigationTitle("Notifications")
@@ -105,7 +109,7 @@ struct NotificationsView: View {
                             presentationMode.wrappedValue.dismiss()
                         }) {
                             Image(systemName: "chevron.left")
-                                .foregroundColor(.white)
+                                .foregroundColor(Theme.Colors.textPrimary)
                         }
                     }
                     
@@ -115,7 +119,7 @@ struct NotificationsView: View {
                         }) {
                             Text("Mark All")
                                 .font(.system(size: Constants.FontSizes.caption))
-                                .foregroundColor(Constants.Colors.primaryPurple)
+                                .foregroundColor(Theme.Colors.primaryButton)
                         }
                     }
                 }
@@ -146,13 +150,13 @@ enum NotificationType {
     var color: Color {
         switch self {
         case .reminder:
-            return .orange
+            return Theme.Colors.primaryButtonHighlight
         case .activity:
-            return Constants.Colors.lightPurple
+            return Theme.Colors.primaryButton.opacity(0.8)
         case .share:
-            return .green
+            return Theme.Colors.primaryButton
         case .system:
-            return .blue
+            return Theme.Colors.primaryButton.opacity(0.6)
         }
     }
 }
@@ -188,11 +192,11 @@ struct NotificationRow: View {
                 HStack {
                     Text(notification.title)
                         .font(.system(size: Constants.FontSizes.body + 2, weight: notification.isRead ? .semibold : .bold))
-                        .foregroundColor(.white)
+                        .foregroundColor(Theme.Colors.textPrimary)
                     
                     if !notification.isRead {
                         Circle()
-                            .fill(Constants.Colors.primaryPurple)
+                            .fill(Theme.Colors.primaryButton)
                             .frame(width: 8, height: 8)
                     }
                     
@@ -201,25 +205,24 @@ struct NotificationRow: View {
                 
                 Text(notification.description)
                     .font(.system(size: Constants.FontSizes.caption + 1, weight: .medium))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(Theme.Colors.textSecondary)
                 
                 Text(notification.time)
                     .font(.system(size: Constants.FontSizes.caption))
                     .fontWeight(.semibold)
-                    .foregroundColor(Constants.Colors.lightPurple)
+                    .foregroundColor(Theme.Colors.primaryButton.opacity(0.8))
                     .padding(.top, 4)
             }
         }
         .padding()
         .background(
-            LinearGradient(
-                gradient: Gradient(colors: [
-                    notification.isRead ? Constants.Colors.lightBackground : Constants.Colors.lightBackground.opacity(0.9),
-                    notification.isRead ? Constants.Colors.lightBackground.opacity(0.8) : Constants.Colors.lightBackground.opacity(0.7)
-                ]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
+            ZStack {
+                if notification.isRead {
+                    Theme.Colors.cardBackground
+                } else {
+                    Theme.Colors.cardBackground.opacity(0.7)
+                }
+            }
         )
         .cornerRadius(Constants.Dimensions.cornerRadius)
         .overlay(
@@ -242,12 +245,11 @@ struct FilterTabButton: View {
             .foregroundColor(isSelected ? .white : .white.opacity(0.7))
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
-            .background(isSelected ? Constants.Colors.primaryPurple : Color.clear)
+            .background(isSelected ? Theme.Colors.primaryButton : Color.clear)
             .cornerRadius(Constants.Dimensions.cornerRadius)
             .overlay(
                 RoundedRectangle(cornerRadius: Constants.Dimensions.cornerRadius)
-                    .stroke(isSelected ? Color.clear : Constants.Colors.lightPurple.opacity(0.3), lineWidth: 1)
-                    .opacity(isSelected ? 0 : 1)
+                    .stroke(isSelected ? Color.clear : Theme.Colors.primaryButton.opacity(0.3), lineWidth: 1)
             )
     }
 }

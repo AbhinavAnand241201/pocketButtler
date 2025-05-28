@@ -18,10 +18,10 @@ struct ForgotPasswordView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
-                    .foregroundColor(Constants.Colors.primaryPurple)
+                    .foregroundColor(Theme.Colors.primaryButton)
                     .background(
                         Circle()
-                            .fill(Constants.Colors.peach)
+                            .fill(Theme.Colors.primaryButtonHighlight.opacity(0.3))
                             .frame(width: 150, height: 150)
                     )
                     .padding(.bottom, Constants.Dimensions.standardPadding)
@@ -30,12 +30,12 @@ struct ForgotPasswordView: View {
                 if showSuccessMessage {
                     Text("Password Reset Email Sent")
                         .font(.system(size: Constants.FontSizes.title, weight: .bold))
-                        .foregroundColor(.white)
+                        .foregroundColor(Theme.Colors.textPrimary)
                         .multilineTextAlignment(.center)
                     
                     Text("Check your email for instructions to reset your password")
                         .font(.system(size: Constants.FontSizes.body))
-                        .foregroundColor(.white.opacity(0.8))
+                        .foregroundColor(Theme.Colors.textSecondary)
                         .multilineTextAlignment(.center)
                         .padding(.top, 8)
                 } else {

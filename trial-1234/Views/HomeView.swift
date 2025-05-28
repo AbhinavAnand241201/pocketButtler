@@ -11,8 +11,12 @@ struct HomeView: View {
     var body: some View {
         ZStack {
             // Background
-            Constants.Colors.darkBackground
-                .ignoresSafeArea()
+            LinearGradient(
+                gradient: Gradient(colors: [Theme.Colors.backgroundStart, Theme.Colors.backgroundEnd]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
             
             VStack(spacing: 0) {
                 // Header with greeting and avatar
@@ -23,11 +27,11 @@ struct HomeView: View {
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 45, height: 45)
                         .clipShape(Circle())
-                        .overlay(Circle().stroke(Constants.Colors.primaryPurple, lineWidth: 2))
+                        .overlay(Circle().stroke(Theme.Colors.primaryButton, lineWidth: 2))
                     
                     // Greeting
                     VStack(alignment: .leading) {
-                        Text("Good morning, Maya!")
+                        Text("Good morning, Abhinav!")
                             .font(.system(size: Constants.FontSizes.title, weight: .bold))
                             .foregroundColor(.white)
                     }
@@ -58,7 +62,7 @@ struct HomeView: View {
                 // Search bar
                 HStack {
                     Image(systemName: "magnifyingglass")
-                        .foregroundColor(.white.opacity(0.7))
+                        .foregroundColor(Theme.Colors.textSecondary)
                     
                     TextField("Search for items...", text: $searchText)
                         .foregroundColor(.white)
@@ -71,7 +75,7 @@ struct HomeView: View {
                         }
                 }
                 .padding()
-                .background(Constants.Colors.lightBackground)
+                .background(Theme.Colors.cardBackground)
                 .cornerRadius(Constants.Dimensions.cornerRadius)
                 .padding(.horizontal)
                 
@@ -85,7 +89,7 @@ struct HomeView: View {
                         
                         if itemViewModel.isLoading {
                             ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                .progressViewStyle(CircularProgressViewStyle(tint: Theme.Colors.textPrimary))
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .padding()
                         } else if itemViewModel.items.isEmpty {
@@ -182,21 +186,21 @@ struct HomeView: View {
                                     title: "Find Nearby",
                                     description: "Locate items around you",
                                     icon: "location.fill",
-                                    color: Constants.Colors.teal
+                                    color: Theme.Colors.primaryButton
                                 )
                                 
                                 QuickActionCard(
                                     title: "Last Seen",
                                     description: "View item history",
                                     icon: "clock.fill",
-                                    color: Constants.Colors.peach
+                                    color: Theme.Colors.primaryButtonHighlight
                                 )
                                 
                                 QuickActionCard(
                                     title: "Share Item",
                                     description: "With household members",
                                     icon: "person.2.fill",
-                                    color: Constants.Colors.primaryPurple
+                                    color: Theme.Colors.primaryButton
                                 )
                             }
                             .padding(.horizontal)
@@ -241,18 +245,19 @@ struct RecentItemCell: View {
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                        .stroke(Theme.Colors.divider, lineWidth: 1)
                 )
-                .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
+                .shadow(color: Theme.Colors.textSecondary.opacity(0.3), radius: 4, x: 0, y: 2)
             
             // Item details
             Text(name)
                 .font(.system(size: Constants.FontSizes.body, weight: .bold))
+                .foregroundColor(Theme.Colors.textPrimary)
                 .foregroundColor(.white)
             
             Text("\(location) • \(timeAgo)")
                 .font(.system(size: Constants.FontSizes.caption))
-                .foregroundColor(Constants.Colors.lightPurple)
+                .foregroundColor(Theme.Colors.textSecondary)
         }
         .padding(.bottom, 8)
     }

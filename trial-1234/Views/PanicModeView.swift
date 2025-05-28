@@ -44,19 +44,23 @@ struct PanicModeView: View {
     var body: some View {
         ZStack {
             // Background
-            Constants.Colors.darkBackground
-                .ignoresSafeArea()
+            LinearGradient(
+                gradient: Gradient(colors: [Theme.Colors.backgroundStart, Theme.Colors.backgroundEnd]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
             
             VStack(spacing: Constants.Dimensions.standardPadding * 2) {
                 // Title
                 Text("Panic Mode")
                     .font(.system(size: 28, weight: .bold))
-                    .foregroundColor(.white)
+                    .foregroundColor(Theme.Colors.textPrimary)
                 
                 // Illustration
                 ZStack {
                     Circle()
-                        .fill(Constants.Colors.primaryPurple.opacity(0.2))
+                        .fill(Theme.Colors.primaryButton.opacity(0.2))
                         .frame(width: 200, height: 200)
                         .scaleEffect(animationAmount)
                         .animation(
@@ -69,7 +73,7 @@ struct PanicModeView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 100, height: 100)
-                        .foregroundColor(Constants.Colors.primaryPurple)
+                        .foregroundColor(Theme.Colors.primaryButton)
                 }
                 .padding(.vertical, Constants.Dimensions.standardPadding * 2)
                 .onAppear {
@@ -79,7 +83,7 @@ struct PanicModeView: View {
                 // Description
                 Text("Plays a loud sound to help you locate nearby items")
                     .font(.system(size: 18))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(Theme.Colors.textSecondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                 
@@ -110,7 +114,7 @@ struct PanicModeView: View {
                 }) {
                     Text("Back to Home")
                         .font(.system(size: 18))
-                        .foregroundColor(.white)
+                        .foregroundColor(Theme.Colors.textPrimary)
                         .underline()
                 }
             }
@@ -126,7 +130,7 @@ struct PanicModeView: View {
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         Image(systemName: "xmark")
-                            .foregroundColor(.white)
+                            .foregroundColor(Theme.Colors.textPrimary)
                     }
                 }
             }

@@ -30,9 +30,8 @@ struct SignUpView: View {
     
     var body: some View {
         ZStack {
-            // Background Gradient
-            Theme.Colors.background
-                .ignoresSafeArea()
+            // Background
+            Constants.Colors.BackgroundView()
             
             ScrollView {
                 VStack(spacing: Theme.Spacing.xlarge) {
@@ -41,7 +40,7 @@ struct SignUpView: View {
                         Button(action: { dismiss() }) {
                             Image(systemName: "chevron.left")
                                 .font(.system(size: 18, weight: .semibold))
-                                .foregroundColor(Theme.Colors.primary)
+                                .foregroundColor(Theme.Colors.primaryButton)
                                 .frame(width: 44, height: 44)
                                 .background(Theme.Colors.cardBackground)
                                 .clipShape(Circle())
@@ -63,7 +62,7 @@ struct SignUpView: View {
                     // Illustration
                     ZStack {
                         Circle()
-                            .fill(Theme.Colors.primary.opacity(0.1))
+                            .fill(Theme.Colors.primaryButton.opacity(0.1))
                             .frame(width: 180, height: 180)
                             .scaleEffect(isAnimating ? 1.0 : 0.9)
                             .opacity(isAnimating ? 1.0 : 0.7)
@@ -75,7 +74,7 @@ struct SignUpView: View {
                             .frame(width: 80, height: 80)
                             .foregroundStyle(
                                 LinearGradient(
-                                    colors: [Theme.Colors.primary, Theme.Colors.accent],
+                                    colors: [Theme.Colors.primaryButton, Theme.Colors.iconActive],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 )
@@ -113,7 +112,7 @@ struct SignUpView: View {
                             )
                             .overlay(
                                 RoundedRectangle(cornerRadius: Theme.CornerRadius.medium)
-                                    .stroke(focusedField == .name ? Theme.Colors.primary : Color.clear, lineWidth: 1.5)
+                                    .stroke(focusedField == .name ? Theme.Colors.primaryButton : Color.clear, lineWidth: 1.5)
                             )
                         }
                         
@@ -145,7 +144,7 @@ struct SignUpView: View {
                             )
                             .overlay(
                                 RoundedRectangle(cornerRadius: Theme.CornerRadius.medium)
-                                    .stroke(focusedField == .email ? Theme.Colors.primary : Color.clear, lineWidth: 1.5)
+                                    .stroke(focusedField == .email ? Theme.Colors.primaryButton : Color.clear, lineWidth: 1.5)
                             )
                         }
                         
@@ -189,7 +188,7 @@ struct SignUpView: View {
                             )
                             .overlay(
                                 RoundedRectangle(cornerRadius: Theme.CornerRadius.medium)
-                                    .stroke(focusedField == .password ? Theme.Colors.primary : Color.clear, lineWidth: 1.5)
+                                    .stroke(focusedField == .password ? Theme.Colors.primaryButton : Color.clear, lineWidth: 1.5)
                             )
                             
                             if !password.isEmpty && password.count < 6 {
@@ -240,7 +239,7 @@ struct SignUpView: View {
                             )
                             .overlay(
                                 RoundedRectangle(cornerRadius: Theme.CornerRadius.medium)
-                                    .stroke(focusedField == .confirmPassword ? Theme.Colors.primary : Color.clear, lineWidth: 1.5)
+                                    .stroke(focusedField == .confirmPassword ? Theme.Colors.primaryButton : Color.clear, lineWidth: 1.5)
                             )
                             
                             if !confirmPassword.isEmpty && !passwordsMatch {
@@ -268,7 +267,7 @@ struct SignUpView: View {
                         .disabled(authViewModel.isLoading || !isFormValid)
                         .opacity(isFormValid ? 1.0 : 0.6)
                         .padding(.top, Theme.Spacing.medium)
-                        .shadow(color: Theme.Colors.primary.opacity(0.3), radius: 10, x: 0, y: 4)
+                        .shadow(color: Theme.Colors.primaryButton.opacity(0.3), radius: 10, x: 0, y: 4)
                         
                         // Terms and Conditions
                         VStack(spacing: Theme.Spacing.small) {
@@ -281,7 +280,7 @@ struct SignUpView: View {
                                     // Show terms of service
                                 }
                                 .font(Theme.Typography.caption2.bold())
-                                .foregroundColor(Theme.Colors.primary)
+                                .foregroundColor(Theme.Colors.primaryButton)
                                 
                                 Circle()
                                     .fill(Theme.Colors.textSecondary.opacity(0.5))
@@ -291,7 +290,7 @@ struct SignUpView: View {
                                     // Show privacy policy
                                 }
                                 .font(Theme.Typography.caption2.bold())
-                                .foregroundColor(Theme.Colors.primary)
+                                .foregroundColor(Theme.Colors.primaryButton)
                             }
                         }
                         .padding(.top, Theme.Spacing.medium)
@@ -325,7 +324,7 @@ struct SignUpView: View {
                         Button(action: { dismiss() }) {
                             Text("Sign In")
                                 .font(Theme.Typography.subheadline.bold())
-                                .foregroundColor(Theme.Colors.primary)
+                                .foregroundColor(Theme.Colors.primaryButton)
                         }
                     }
                     .padding(.bottom, Theme.Spacing.xlarge)

@@ -1,5 +1,6 @@
 import SwiftUI
 
+// MARK: - Main Settings View
 struct SettingsView: View {
     @StateObject private var authViewModel = AuthViewModel()
     @State private var isDarkMode = true
@@ -17,141 +18,25 @@ struct SettingsView: View {
                 
                 ScrollView {
                     VStack(spacing: 20) {
-                        // Account section
-                        SettingsSectionView(title: "Account") {
-                            // Profile button
-                            Button(action: {
-                                showProfileView = true
-                            }) {
-                                HStack {
-                                    // Avatar
-                                    Image("shh3")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 50, height: 50)
-                                        .clipShape(Circle())
-                                    
-                                    // User info
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        Text("Maya Johnson")
-                                            .font(.system(size: 18, weight: .bold))
-                                            .foregroundColor(.white)
-                                        
-                                        Text("Free Account")
-                                            .font(.system(size: 14))
-                                            .foregroundColor(.gray)
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(.white.opacity(0.7))
-                                }
-                                .padding()
-                                .background(Constants.Colors.lightBackground)
-                                .cornerRadius(12)
-                            }
-                            
-                            // Upgrade button
-                            Button(action: {
-                                showUpgradeSheet = true
-                            }) {
-                                HStack {
-                                    Image(systemName: "star.fill")
-                                        .foregroundColor(.yellow)
-                                    
-                                    Text("Upgrade to Premium")
-                                        .font(.system(size: 18, weight: .medium))
-                                        .foregroundColor(.white)
-                                    
-                                    Spacer()
-                                    
-                                    Text("$2/month")
-                                        .font(.system(size: 14, weight: .bold))
-                                        .foregroundColor(.gray)
-                                }
-                                .padding()
-                                .background(Constants.Colors.lightBackground)
-                                .cornerRadius(12)
-                            }
-                        }
+                        // Account Section
+                        AccountSectionView(
+                            showUpgradeSheet: $showUpgradeSheet,
+                            showProfileView: $showProfileView
+                        )
                         
-                        // App Settings section
-                        SettingsSectionView(title: "App Settings") {
-                            // Dark mode toggle
-                            SettingsToggleRow(
-                                icon: "moon.fill",
-                                title: "Dark Mode",
-                                isOn: $isDarkMode
-                            )
-                            
-                            // Notifications toggle
-                            SettingsToggleRow(
-                                icon: "bell.fill",
-                                title: "Notifications",
-                                isOn: $notificationsEnabled
-                            )
-                            
-                            // Location toggle
-                            SettingsToggleRow(
-                                icon: "location.fill",
-                                title: "Location Services",
-                                isOn: $locationPermission
-                            )
-                        }
+                        // App Settings Section
+                        AppSettingsSectionView(
+                            isDarkMode: $isDarkMode,
+                            notificationsEnabled: $notificationsEnabled,
+                            locationPermission: $locationPermission
+                        )
                         
-                        // About section
-                        SettingsSectionView(title: "About") {
-                            // App version
-                            HStack {
-                                Label("Version", systemImage: "info.circle.fill")
-                                    .font(.system(size: 18))
-                                    .foregroundColor(.white)
-                                
-                                Spacer()
-                                
-                                Text("1.0.0")
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.gray)
-                            }
-                            .padding()
-                            .background(Constants.Colors.lightBackground)
-                            .cornerRadius(12)
-                            
-                            // Privacy Policy
-                            SettingsLinkRow(
-                                icon: "lock.fill",
-                                title: "Privacy Policy",
-                                action: {}
-                            )
-                            
-                            // Terms of Service
-                            SettingsLinkRow(
-                                icon: "doc.text.fill",
-                                title: "Terms of Service",
-                                action: {}
-                            )
-                            
-                            // Help & Support
-                            SettingsLinkRow(
-                                icon: "questionmark.circle.fill",
-                                title: "Help & Support",
-                                action: {}
-                            )
-                            
-                            // Logout button
-                            Button(action: {
-                                authViewModel.logout()
-                            }) {
-                                Text("Log Out")
-                                    .font(.system(size: 18, weight: .bold))
-                                    .foregroundColor(.red)
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(Constants.Colors.lightBackground)
-                                    .cornerRadius(12)
-                            }
-                            .padding(.top, 20)
+                        // About Section
+                        AboutSectionView()
+                        
+                        // Logout Button
+                        LogoutSectionView {
+                            authViewModel.logout()
                         }
                         
                         // Bottom padding
@@ -161,20 +46,258 @@ struct SettingsView: View {
                     .padding(.top, 20)
                 }
             }
-            .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Settings")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(Theme.Colors.textPrimary)
+                }
+            }
+            .background(Constants.Colors.darkBackground.ignoresSafeArea())
         }
         .sheet(isPresented: $showUpgradeSheet) {
             PremiumView()
+                .preferredColorScheme(.dark)
         }
         .fullScreenCover(isPresented: $showProfileView) {
             ProfileView()
+                .preferredColorScheme(.dark)
+        }
+        .accentColor(Theme.Colors.iconActive)
+    }
+}
+
+// MARK: - Account Section View
+private struct AccountSectionView: View {
+    @Binding var showUpgradeSheet: Bool
+    @Binding var showProfileView: Bool
+    
+    var body: some View {
+        SettingsSectionView(title: "ACCOUNT") {
+            // Profile button
+            Button(action: {
+                showProfileView = true
+            }) {
+                HStack {
+                    // Avatar
+                    Image("shh3")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 50, height: 50)
+                        .clipShape(Circle())
+                        .overlay(
+                            Circle()
+                                .stroke(Theme.Colors.iconActive, lineWidth: 1.5)
+                        )
+                    
+                    // User info
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Maya Johnson")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(Theme.Colors.textPrimary)
+                        
+                        Text("Free Account")
+                            .font(.system(size: 13))
+                            .foregroundColor(Theme.Colors.textSecondary)
+                    }
+                    .padding(.leading, 8)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(Theme.Colors.iconDefault)
+                }
+                .padding(16)
+                .background(Theme.Colors.cardBackground)
+                .cornerRadius(12)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Theme.Colors.divider, lineWidth: 1)
+                )
+            }
+            .buttonStyle(PlainButtonStyle())
+            
+            // Upgrade button
+            Button(action: {
+                showUpgradeSheet = true
+            }) {
+                HStack {
+                    Image(systemName: "sparkles")
+                        .font(.system(size: 16))
+                        .foregroundColor(Theme.Colors.iconActive)
+                    
+                    Text("Upgrade to Premium")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(Theme.Colors.textPrimary)
+                    
+                    Spacer()
+                    
+                    Text("$2/month")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(Theme.Colors.textSecondary)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 4)
+                        .background(Theme.Colors.cardBackground.opacity(0.5))
+                        .cornerRadius(12)
+                }
+                .padding(16)
+                .background(Theme.Colors.cardBackground)
+                .cornerRadius(12)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Theme.Colors.divider, lineWidth: 1)
+                )
+            }
+            .buttonStyle(PlainButtonStyle())
         }
     }
 }
 
-// Helper Views for Settings
+// MARK: - App Settings Section View
+private struct AppSettingsSectionView: View {
+    @Binding var isDarkMode: Bool
+    @Binding var notificationsEnabled: Bool
+    @Binding var locationPermission: Bool
+    
+    var body: some View {
+        SettingsSectionView(title: "APP SETTINGS") {
+            // Dark mode toggle
+            SettingsToggleRow(
+                icon: "moon.fill",
+                title: "Dark Mode",
+                isOn: $isDarkMode
+            )
+            
+            // Notifications toggle
+            SettingsToggleRow(
+                icon: "bell.fill",
+                title: "Notifications",
+                isOn: $notificationsEnabled
+            )
+            
+            // Location toggle
+            SettingsToggleRow(
+                icon: "location.fill",
+                title: "Location Services",
+                isOn: $locationPermission
+            )
+        }
+    }
+}
 
+// MARK: - About Section View
+private struct AboutSectionView: View {
+    var body: some View {
+        SettingsSectionView(title: "ABOUT") {
+            // App version
+            HStack {
+                Image(systemName: "info.circle")
+                    .font(.system(size: 16))
+                    .foregroundColor(Theme.Colors.iconDefault)
+                    .frame(width: 32, height: 32)
+                    .background(Theme.Colors.cardBackground.opacity(0.5))
+                    .clipShape(Circle())
+                
+                Text("Version")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(Theme.Colors.textPrimary)
+                
+                Spacer()
+                
+                Text("1.0.0")
+                    .font(.system(size: 15, weight: .regular, design: .monospaced))
+                    .foregroundColor(Theme.Colors.textSecondary)
+            }
+            .padding(16)
+            
+            // Divider
+            Divider()
+                .background(Theme.Colors.divider)
+                .padding(.horizontal, 16)
+            
+            // Privacy Policy
+            NavigationLink(destination: Text("Privacy Policy")) {
+                HStack {
+                    Image(systemName: "hand.raised.fill")
+                        .font(.system(size: 16))
+                        .foregroundColor(Theme.Colors.iconDefault)
+                        .frame(width: 32, height: 32)
+                        .background(Theme.Colors.cardBackground.opacity(0.5))
+                        .clipShape(Circle())
+                    
+                    Text("Privacy Policy")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(Theme.Colors.textPrimary)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(Theme.Colors.iconDefault)
+                }
+                .padding(16)
+            }
+            .buttonStyle(PlainButtonStyle())
+            
+            // Divider
+            Divider()
+                .background(Theme.Colors.divider)
+                .padding(.horizontal, 16)
+            
+            // Terms of Service
+            NavigationLink(destination: Text("Terms of Service")) {
+                HStack {
+                    Image(systemName: "doc.text")
+                        .font(.system(size: 16))
+                        .foregroundColor(Theme.Colors.iconDefault)
+                        .frame(width: 32, height: 32)
+                        .background(Theme.Colors.cardBackground.opacity(0.5))
+                        .clipShape(Circle())
+                    
+                    Text("Terms of Service")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(Theme.Colors.textPrimary)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(Theme.Colors.iconDefault)
+                }
+                .padding(16)
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
+    }
+}
+
+// MARK: - Logout Section View
+private struct LogoutSectionView: View {
+    let onSignOut: () -> Void
+    
+    var body: some View {
+        SettingsSectionView(title: "") {
+            Button(action: {
+                onSignOut()
+            }) {
+                HStack {
+                    Spacer()
+                    Text("Log Out")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(Theme.Colors.error)
+                    Spacer()
+                }
+                .padding(16)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
+    }
+}
+
+// MARK: - Settings Section View
 struct SettingsSectionView<Content: View>: View {
     let title: String
     let content: Content
@@ -185,16 +308,31 @@ struct SettingsSectionView<Content: View>: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(title)
-                .font(.system(size: 24, weight: .bold))
-                .foregroundColor(.white)
+        VStack(alignment: .leading, spacing: 12) {
+            if !title.isEmpty {
+                Text(title.uppercased())
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .kerning(1.0)
+                    .foregroundColor(Theme.Colors.textTertiary)
+                    .padding(.horizontal, 20)
+            }
             
-            content
+            VStack(spacing: 0) {
+                content
+            }
+            .background(Theme.Colors.cardBackground)
+            .cornerRadius(12)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Theme.Colors.divider, lineWidth: 1)
+            )
+            .padding(.horizontal, 16)
         }
+        .padding(.vertical, 8)
     }
 }
 
+// MARK: - Settings Toggle Row
 struct SettingsToggleRow: View {
     let icon: String
     let title: String
@@ -202,18 +340,33 @@ struct SettingsToggleRow: View {
     
     var body: some View {
         HStack {
-            Label(title, systemImage: icon)
-                .font(.system(size: 18))
-                .foregroundColor(.white)
+            // Icon
+            Image(systemName: icon)
+                .font(.system(size: 16))
+                .foregroundColor(Theme.Colors.iconDefault)
+                .frame(width: 32, height: 32)
+                .background(Theme.Colors.cardBackground.opacity(0.5))
+                .clipShape(Circle())
+            
+            // Title
+            Text(title)
+                .font(.system(size: 16, weight: .medium))
+                .foregroundColor(Theme.Colors.textPrimary)
             
             Spacer()
             
+            // Toggle
             Toggle("", isOn: $isOn)
-                .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.primaryPurple))
+                .labelsHidden()
+                .toggleStyle(CustomToggleStyle())
         }
-        .padding()
-        .background(Constants.Colors.lightBackground)
-        .cornerRadius(12)
+        .padding(16)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            withAnimation(.spring()) {
+                isOn.toggle()
+            }
+        }
     }
 }
 

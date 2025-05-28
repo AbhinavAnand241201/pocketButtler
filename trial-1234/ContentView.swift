@@ -14,8 +14,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             // Background
-            Constants.Colors.darkBackground
-                .ignoresSafeArea()
+            Constants.Colors.BackgroundView()
             
             // App flow
             if !hasCompletedOnboarding {

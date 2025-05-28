@@ -11,8 +11,12 @@ struct StatisticsView: View {
         NavigationView {
             ZStack {
                 // Background
-                Constants.Colors.darkBackground
-                    .ignoresSafeArea()
+                LinearGradient(
+                    gradient: Gradient(colors: [Theme.Colors.backgroundStart, Theme.Colors.backgroundEnd]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
                 
                 ScrollView {
                     VStack(spacing: Constants.Dimensions.standardPadding * 1.5) {
@@ -32,28 +36,28 @@ struct StatisticsView: View {
                         StatSummaryCard(
                             title: "Usage Summary",
                             icon: "chart.bar.fill",
-                            color: Constants.Colors.primaryPurple,
+                            color: Theme.Colors.primaryButton,
                             content: {
                                 HStack(spacing: Constants.Dimensions.standardPadding * 2) {
                                     StatNumberView(
                                         number: "42",
                                         label: "Items Tracked",
                                         icon: "tag.fill",
-                                        color: Constants.Colors.primaryPurple
+                                        color: Theme.Colors.primaryButton
                                     )
                                     
                                     StatNumberView(
                                         number: "18",
                                         label: "Searches",
                                         icon: "magnifyingglass",
-                                        color: Constants.Colors.teal
+                                        color: Theme.Colors.primaryButton
                                     )
                                     
                                     StatNumberView(
                                         number: "7",
                                         label: "Categories",
                                         icon: "folder.fill",
-                                        color: Constants.Colors.orange
+                                        color: Theme.Colors.primaryButtonHighlight
                                     )
                                 }
                             }
@@ -63,7 +67,7 @@ struct StatisticsView: View {
                         StatSummaryCard(
                             title: "Most Used Items",
                             icon: "star.fill",
-                            color: Constants.Colors.teal,
+                            color: Theme.Colors.primaryButtonHighlight,
                             content: {
                                 VStack(spacing: Constants.Dimensions.standardPadding) {
                                     ForEach(topItems) { item in
@@ -82,7 +86,7 @@ struct StatisticsView: View {
                         StatSummaryCard(
                             title: "Most Searched",
                             icon: "magnifyingglass",
-                            color: Constants.Colors.orange,
+                            color: Theme.Colors.primaryButtonHighlight,
                             content: {
                                 VStack(spacing: Constants.Dimensions.standardPadding) {
                                     ForEach(mostSearched) { item in
@@ -101,7 +105,7 @@ struct StatisticsView: View {
                         StatSummaryCard(
                             title: "Frequent Locations",
                             icon: "location.fill",
-                            color: Constants.Colors.lightPurple,
+                            color: Theme.Colors.primaryButton.opacity(0.8),
                             content: {
                                 VStack(spacing: Constants.Dimensions.standardPadding) {
                                     ForEach(frequentLocations) { location in
@@ -120,7 +124,7 @@ struct StatisticsView: View {
                         StatSummaryCard(
                             title: "Activity Over Time",
                             icon: "chart.line.uptrend.xyaxis",
-                            color: Constants.Colors.peach,
+                            color: Theme.Colors.primaryButtonHighlight.opacity(0.7),
                             content: {
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text("Item Tracking Activity")
@@ -134,7 +138,7 @@ struct StatisticsView: View {
                                             
                                             VStack {
                                                 Rectangle()
-                                                    .fill(Constants.Colors.primaryPurple)
+                                                    .fill(Theme.Colors.primaryButton)
                                                     .frame(height: 120 * height)
                                                     .cornerRadius(4)
                                                 
@@ -161,7 +165,7 @@ struct StatisticsView: View {
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         Image(systemName: "chevron.left")
-                            .foregroundColor(.white)
+                            .foregroundColor(Theme.Colors.textPrimary)
                     }
                 }
             }
@@ -177,16 +181,16 @@ struct StatisticsView: View {
         
         // Top items
         topItems = [
-            ItemStat(id: "1", name: "Keys", count: 28, icon: "key.fill", color: .yellow),
-            ItemStat(id: "2", name: "Wallet", count: 23, icon: "creditcard.fill", color: .green),
-            ItemStat(id: "3", name: "Phone", count: 19, icon: "iphone", color: .blue)
+            ItemStat(id: "1", name: "Keys", count: 28, icon: "key.fill", color: Theme.Colors.primaryButton),
+            ItemStat(id: "2", name: "Wallet", count: 23, icon: "creditcard.fill", color: Theme.Colors.primaryButtonHighlight),
+            ItemStat(id: "3", name: "Phone", count: 19, icon: "iphone", color: Theme.Colors.iconDefault)
         ]
         
         // Most searched
         mostSearched = [
-            ItemStat(id: "1", name: "Keys", count: 15, icon: "key.fill", color: .yellow),
-            ItemStat(id: "2", name: "Headphones", count: 12, icon: "headphones", color: .white),
-            ItemStat(id: "3", name: "Glasses", count: 8, icon: "eyeglasses", color: .red)
+            ItemStat(id: "1", name: "Keys", count: 15, icon: "key.fill", color: Theme.Colors.primaryButton),
+            ItemStat(id: "2", name: "Headphones", count: 12, icon: "headphones", color: Theme.Colors.iconDefault),
+            ItemStat(id: "3", name: "Glasses", count: 8, icon: "eyeglasses", color: Theme.Colors.primaryButtonHighlight)
         ]
         
         // Frequent locations

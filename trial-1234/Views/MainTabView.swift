@@ -50,7 +50,7 @@ struct MainTabView: View {
                 VStack(spacing: 0) {
                     Rectangle()
                         .frame(height: 1)
-                        .foregroundColor(Constants.Colors.lightBackground)
+                        .foregroundColor(Color.white.opacity(0.2))
                     
                     HStack {
                         TabBarButton(
@@ -82,7 +82,7 @@ struct MainTabView: View {
                             }) {
                                 ZStack {
                                     Circle()
-                                        .fill(Constants.Colors.primaryPurple)
+                                        .fill(Theme.Colors.primaryButton)
                                         .frame(width: 56, height: 56)
                                         .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
                                     

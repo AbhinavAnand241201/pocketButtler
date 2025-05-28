@@ -2,73 +2,84 @@ import SwiftUI
 
 struct CategoriesView: View {
     @Environment(\.presentationMode) var presentationMode
-    @StateObject private var categoryViewModel = CategoryViewModel()
-    
+    @StateObject private var viewModel = CategoryViewModel()
     @State private var showAddCategorySheet = false
+    
+    private let columns = [
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16)
+    ]
     
     var body: some View {
         NavigationView {
             ZStack {
                 // Background
-                Constants.Colors.darkBackground
-                    .ignoresSafeArea()
+                LinearGradient(
+                    gradient: Gradient(colors: [Theme.Colors.backgroundStart, Theme.Colors.backgroundEnd]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
                 
-                VStack(spacing: Constants.Dimensions.standardPadding) {
-                    // Grid of categories
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
-                        ForEach(categoryViewModel.categories) { category in
-                            CategoryCell(category: category)
-                        }
-                        
-                        // Add category button
-                        Button(action: {
-                            showAddCategorySheet = true
-                        }) {
-                            VStack(spacing: 16) {
-                                ZStack {
-                                    Circle()
-                                        .stroke(Color.white.opacity(0.5), lineWidth: 2)
-                                        .frame(width: 60, height: 60)
-                                    
-                                    Image(systemName: "plus")
-                                        .font(.system(size: 24))
-                                        .foregroundColor(.white)
-                                }
-                                
-                                Text("Add Category")
-                                    .font(.system(size: Constants.FontSizes.body))
-                                    .foregroundColor(.white)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Constants.Colors.lightBackground)
-                            .cornerRadius(Constants.Dimensions.cornerRadius)
+                // Content
+                mainContentView
+                    .navigationTitle("Categories")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            backButton
                         }
                     }
-                    .padding()
-                }
-                .navigationTitle("Categories")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(.white)
-                        }
-                    }
-                }
-            }
-            .sheet(isPresented: $showAddCategorySheet) {
-                AddCategoryView(categoryViewModel: categoryViewModel)
-            }
-            .onAppear {
-                categoryViewModel.fetchCategories()
             }
         }
+        .sheet(isPresented: $showAddCategorySheet) {
+            AddCategoryView(categoryViewModel: viewModel)
+        }
+        .onAppear {
+            viewModel.fetchCategories()
+        }
+    }
+    
+    private var mainContentView: some View {
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 16) {
+                ForEach(viewModel.categories) { category in
+                    CategoryCell(category: category)
+                }
+                addButton
+            }
+            .padding()
+        }
+    }
+    
+    private var backButton: some View {
+        Button(action: { presentationMode.wrappedValue.dismiss() }) {
+            Image(systemName: "chevron.left")
+                .foregroundColor(.white)
+        }
+    }
+    
+    private var addButton: some View {
+        Button(action: { showAddCategorySheet = true }) {
+            VStack(spacing: 16) {
+                Image(systemName: "plus.circle.fill")
+                    .font(.system(size: 40))
+                    .foregroundColor(Theme.Colors.primaryButton)
+                
+                Text("Add Category")
+                    .font(.system(size: Constants.FontSizes.body))
+                    .foregroundColor(.white)
+            }
+            .frame(maxWidth: .infinity, minHeight: 150)
+            .padding()
+            .background(Theme.Colors.cardBackground)
+            .cornerRadius(Constants.Dimensions.cornerRadius)
+        }
+        .buttonStyle(PlainButtonStyle())
     }
 }
+
+// MARK: - Models and Subviews
 
 struct Category: Identifiable {
     let id: String
@@ -82,24 +93,31 @@ struct CategoryCell: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            ZStack {
-                Circle()
-                    .fill(category.color.opacity(0.2))
-                    .frame(width: 60, height: 60)
-                
-                Image(systemName: category.icon)
-                    .font(.system(size: 24))
-                    .foregroundColor(category.color)
-            }
-            
-            Text(category.name)
-                .font(.system(size: Constants.FontSizes.body))
-                .foregroundColor(.white)
+            iconView
+            nameView
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .background(Constants.Colors.lightBackground)
+        .background(Theme.Colors.cardBackground)
         .cornerRadius(Constants.Dimensions.cornerRadius)
+    }
+    
+    private var iconView: some View {
+        ZStack {
+            Circle()
+                .fill(category.color.opacity(0.2))
+                .frame(width: 60, height: 60)
+            
+            Image(systemName: category.icon)
+                .font(.system(size: 24))
+                .foregroundColor(category.color)
+        }
+    }
+    
+    private var nameView: some View {
+        Text(category.name)
+            .font(.system(size: Constants.FontSizes.body))
+            .foregroundColor(Theme.Colors.textPrimary)
     }
 }
 
@@ -113,136 +131,171 @@ struct AddCategoryView: View {
     @State private var errorMessage: String? = nil
     
     // Sample icons
-    let icons = [
+    private let icons = [
         "tag.fill", "laptopcomputer", "doc.fill", "key.fill",
         "bicycle", "tshirt.fill", "eyeglasses", "bag.fill"
     ]
     
     // Sample colors
-    let colors: [Color] = [
+    private let colors: [Color] = [
         .red, .orange, .yellow, .green, .blue, .purple, .pink
     ]
     
     var body: some View {
         NavigationView {
             ZStack {
-                Constants.Colors.darkBackground
-                    .ignoresSafeArea()
+                // Background
+                LinearGradient(
+                    gradient: Gradient(colors: [Theme.Colors.backgroundStart, Theme.Colors.backgroundEnd]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
                 
-                VStack(spacing: Constants.Dimensions.standardPadding) {
-                    // Category preview
-                    VStack(spacing: 16) {
-                        ZStack {
-                            Circle()
-                                .fill(selectedColor.opacity(0.2))
-                                .frame(width: 80, height: 80)
-                            
-                            Image(systemName: selectedIcon)
-                                .font(.system(size: 32))
-                                .foregroundColor(selectedColor)
-                        }
-                        
-                        Text(categoryName.isEmpty ? "New Category" : categoryName)
-                            .font(.system(size: Constants.FontSizes.title, weight: .bold))
-                            .foregroundColor(.white)
-                    }
-                    .padding(.vertical, Constants.Dimensions.standardPadding * 2)
-                    
-                    // Category name field
-                    TextField("Category Name", text: $categoryName)
-                        .standardTextFieldStyle()
-                    
-                    // Icon selection
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Select Icon")
-                            .font(.system(size: Constants.FontSizes.body, weight: .medium))
-                            .foregroundColor(.white)
-                        
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 50))], spacing: 16) {
-                            ForEach(icons, id: \.self) { icon in
-                                Button(action: {
-                                    selectedIcon = icon
-                                }) {
-                                    ZStack {
-                                        Circle()
-                                            .fill(selectedIcon == icon ? selectedColor.opacity(0.2) : Constants.Colors.lightBackground)
-                                            .frame(width: 50, height: 50)
-                                        
-                                        Image(systemName: icon)
-                                            .font(.system(size: 20))
-                                            .foregroundColor(selectedIcon == icon ? selectedColor : .white)
-                                    }
-                                }
+                // Main content
+                mainContentView
+                    .navigationTitle("Add Category")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button(action: {
+                                presentationMode.wrappedValue.dismiss()
+                            }) {
+                                Image(systemName: "xmark")
+                                    .foregroundColor(Theme.Colors.textPrimary)
                             }
                         }
                     }
-                    
-                    // Color selection
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Select Color")
-                            .font(.system(size: Constants.FontSizes.body, weight: .medium))
-                            .foregroundColor(.white)
-                        
-                        HStack(spacing: 16) {
-                            ForEach(colors, id: \.self) { color in
-                                Button(action: {
-                                    selectedColor = color
-                                }) {
-                                    ZStack {
-                                        Circle()
-                                            .fill(color)
-                                            .frame(width: 30, height: 30)
-                                        
-                                        if color == selectedColor {
-                                            Circle()
-                                                .stroke(Color.white, lineWidth: 2)
-                                                .frame(width: 36, height: 36)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                    Spacer()
-                    
-                    // Save button
-                    Button(action: {
-                        saveCategory()
-                    }) {
-                        if isLoading {
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        } else {
-                            Text("Save Category")
-                                .frame(maxWidth: .infinity)
-                        }
-                    }
-                    .standardButtonStyle()
-                    .disabled(categoryName.isEmpty || isLoading)
-                    .opacity((categoryName.isEmpty || isLoading) ? 0.7 : 1)
-                    
-                    if let errorMessage = errorMessage {
-                        Text(errorMessage)
-                            .foregroundColor(.red)
-                            .font(.system(size: 14))
-                    }
-                }
-                .padding()
-                .navigationTitle("Add Category")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Image(systemName: "xmark")
-                                .foregroundColor(.white)
-                        }
-                    }
-                }
             }
         }
+    }
+    
+    private var mainContentView: some View {
+        VStack(spacing: Constants.Dimensions.standardPadding) {
+            // Category preview
+            categoryPreview
+            
+            // Category name field
+            TextField("Category Name", text: $categoryName)
+                .standardTextFieldStyle()
+            
+            // Icon selection
+            iconSelectionView
+            
+            // Color selection
+            colorSelectionView
+            
+            Spacer()
+            
+            // Error message
+            if let errorMessage = errorMessage {
+                Text(errorMessage)
+                    .font(.system(size: Constants.FontSizes.caption))
+                    .foregroundColor(.red)
+                    .padding(.bottom, 8)
+            }
+            
+            // Save button
+            saveButton
+        }
+        .padding()
+    }
+    
+    private var categoryPreview: some View {
+        VStack(spacing: 16) {
+            ZStack {
+                Circle()
+                    .fill(selectedColor.opacity(0.2))
+                    .frame(width: 80, height: 80)
+                
+                Image(systemName: selectedIcon)
+                    .font(.system(size: 32))
+                    .foregroundColor(selectedColor)
+            }
+            
+            Text(categoryName.isEmpty ? "New Category" : categoryName)
+                .font(.system(size: Constants.FontSizes.title, weight: .bold))
+                .foregroundColor(Theme.Colors.textPrimary)
+        }
+        .padding(.vertical, Constants.Dimensions.standardPadding * 2)
+    }
+    
+    private var iconSelectionView: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Icon")
+                .font(.system(size: Constants.FontSizes.caption))
+                .foregroundColor(Theme.Colors.textSecondary)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(icons, id: \.self) { icon in
+                        Button(action: { selectedIcon = icon }) {
+                            ZStack {
+                                Circle()
+                                    .fill(selectedIcon == icon ? selectedColor.opacity(0.2) : Constants.Colors.lightBackgroundColor)
+                                    .frame(width: 50, height: 50)
+                                
+                                Image(systemName: icon)
+                                    .font(.system(size: 20))
+                                    .foregroundColor(selectedIcon == icon ? selectedColor : Theme.Colors.textPrimary)
+                            }
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+                .padding(.vertical, 8)
+            }
+        }
+    }
+    
+    private var colorSelectionView: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Color")
+                .font(.system(size: Constants.FontSizes.caption))
+                .foregroundColor(Theme.Colors.textSecondary)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(colors, id: \.self) { color in
+                        Button(action: { selectedColor = color }) {
+                            ZStack {
+                                Circle()
+                                    .fill(color)
+                                    .frame(width: 40, height: 40)
+                                
+                                if selectedColor == color {
+                                    Image(systemName: "checkmark")
+                                        .font(.system(size: 16, weight: .bold))
+                                        .foregroundColor(.white)
+                                }
+                            }
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+                .padding(.vertical, 8)
+            }
+        }
+    }
+    
+    private var saveButton: some View {
+        Button(action: saveCategory) {
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+            } else {
+                Text("Save Category")
+                    .font(.system(size: Constants.FontSizes.body, weight: .semibold))
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 50)
+        .background(Theme.Colors.primaryButton)
+        .foregroundColor(Theme.Colors.textPrimary)
+        .cornerRadius(Constants.Dimensions.buttonCornerRadius)
+        .padding(.bottom, Constants.Dimensions.standardPadding)
+        .disabled(categoryName.isEmpty || isLoading)
+        .opacity(categoryName.isEmpty ? 0.7 : 1.0)
     }
     
     private func saveCategory() {

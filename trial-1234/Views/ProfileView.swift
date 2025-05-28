@@ -24,7 +24,7 @@ struct ProfileView: View {
                             .clipShape(Circle())
                             .overlay(
                                 Circle()
-                                    .stroke(Constants.Colors.primaryPurple, lineWidth: 3)
+                                    .stroke(Theme.Colors.primaryButton, lineWidth: 3)
                             )
                         
                         // Name
@@ -78,16 +78,16 @@ struct ProfileView: View {
                             HStack {
                                 Text("Email")
                                     .font(.system(size: 18))
-                                    .foregroundColor(.white.opacity(0.7))
+                                    .foregroundColor(Theme.Colors.textSecondary)
                                 
                                 Spacer()
                                 
                                 Text(email)
                                     .font(.system(size: 18))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Theme.Colors.textPrimary)
                             }
                             .padding()
-                            .background(Constants.Colors.lightBackground)
+                            .background(Theme.Colors.cardBackground)
                             .cornerRadius(Constants.Dimensions.cornerRadius)
                             .padding(.top, Constants.Dimensions.standardPadding * 2)
                             
@@ -95,7 +95,7 @@ struct ProfileView: View {
                             HStack {
                                 Text("Account Type")
                                     .font(.system(size: 18))
-                                    .foregroundColor(.white.opacity(0.7))
+                                    .foregroundColor(Theme.Colors.textSecondary)
                                 
                                 Spacer()
                                 

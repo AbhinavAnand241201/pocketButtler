@@ -31,9 +31,8 @@ struct OnboardingView: View {
     
     var body: some View {
         ZStack {
-            // Background Gradient
-            Theme.Colors.background
-                .ignoresSafeArea()
+            // Background
+            Constants.Colors.BackgroundView()
             
             VStack(spacing: 0) {
                 // Skip button
@@ -68,7 +67,7 @@ struct OnboardingView: View {
                 HStack(spacing: 8) {
                     ForEach(0..<pages.count, id: \.self) { index in
                         Capsule()
-                            .fill(currentPage == index ? Theme.Colors.primary : Theme.Colors.textSecondary.opacity(0.3))
+                            .fill(currentPage == index ? Theme.Colors.primaryButton : Theme.Colors.textSecondary.opacity(0.3))
                             .frame(width: currentPage == index ? 24 : 8, height: 8)
                             .animation(.spring(), value: currentPage)
                     }
@@ -124,12 +123,12 @@ struct OnboardingView: View {
                             }
                         }
                         .font(Theme.Typography.subheadline.bold())
-                        .foregroundColor(.white)
+                        .foregroundColor(Theme.Colors.textPrimary)
                     }
                     .frame(width: 160, height: 50)
-                    .background(Theme.Colors.primary)
+                    .background(Theme.Colors.primaryButton)
                     .cornerRadius(Theme.CornerRadius.medium)
-                    .shadow(color: Theme.Colors.primary.opacity(0.3), radius: 10, x: 0, y: 4)
+                    .shadow(color: Theme.Colors.primaryButton.opacity(0.3), radius: 10, x: 0, y: 4)
                 }
                 .padding(.horizontal, Theme.Spacing.large)
                 .padding(.bottom, Theme.Spacing.xlarge)
@@ -157,7 +156,7 @@ struct OnboardingPageView: View {
             ZStack {
                 // Background glow
                 Circle()
-                    .fill(Theme.Colors.primary.opacity(0.1))
+                    .fill(Theme.Colors.primaryButton.opacity(0.1))
                     .frame(width: 220, height: 220)
                     .scaleEffect(animate ? 1.0 : 0.8)
                     .opacity(animate ? 1.0 : 0.5)
@@ -170,12 +169,12 @@ struct OnboardingPageView: View {
                     .frame(width: 100, height: 100)
                     .foregroundStyle(
                         LinearGradient(
-                            colors: [Theme.Colors.primary, Theme.Colors.accent],
+                            colors: [Theme.Colors.primaryButton, Theme.Colors.primaryButtonHighlight],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
                     )
-                    .shadow(color: Theme.Colors.primary.opacity(0.3), radius: 10, x: 0, y: 5)
+                    .shadow(color: Theme.Colors.primaryButton.opacity(0.3), radius: 10, x: 0, y: 5)
             }
             .frame(height: 220)
             .onAppear {

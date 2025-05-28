@@ -32,8 +32,12 @@ struct MapView: View {
     var body: some View {
         ZStack {
             // Background
-            Constants.Colors.darkBackground
-                .ignoresSafeArea()
+            LinearGradient(
+                gradient: Gradient(colors: [Theme.Colors.backgroundStart, Theme.Colors.backgroundEnd]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
             
             VStack(spacing: 0) {
                 // Map
@@ -47,7 +51,7 @@ struct MapView: View {
                                 VStack {
                                     ZStack {
                                         Circle()
-                                            .fill(Constants.Colors.primaryPurple)
+                                            .fill(Theme.Colors.primaryButton)
                                             .frame(width: 45, height: 45)
                                             .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
                                         
@@ -62,7 +66,7 @@ struct MapView: View {
                                         .font(.system(size: 12, weight: .bold))
                                         .foregroundColor(.white)
                                         .padding(4)
-                                        .background(Constants.Colors.darkBackground.opacity(0.8))
+                                        .background(Theme.Colors.cardBackground.opacity(0.9))
                                         .cornerRadius(4)
                                 }
                             }
@@ -80,7 +84,7 @@ struct MapView: View {
                 VStack(alignment: .leading, spacing: Constants.Dimensions.standardPadding) {
                     Text("Nearby Items")
                         .font(.system(size: Constants.FontSizes.title, weight: .bold))
-                        .foregroundColor(.white)
+                        .foregroundColor(Theme.Colors.textPrimary)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 16) {

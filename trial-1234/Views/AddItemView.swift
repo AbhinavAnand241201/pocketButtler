@@ -16,8 +16,12 @@ struct AddItemView: View {
         NavigationView {
             ZStack {
                 // Background
-                Constants.Colors.darkBackground
-                    .ignoresSafeArea()
+                LinearGradient(
+                    gradient: Gradient(colors: [Theme.Colors.backgroundStart, Theme.Colors.backgroundEnd]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
                 
                 VStack(spacing: Constants.Dimensions.standardPadding) {
                     // Item name field
@@ -58,7 +62,7 @@ struct AddItemView: View {
                             }) {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: Constants.Dimensions.cornerRadius)
-                                        .fill(Constants.Colors.lightBackground)
+                                        .fill(Theme.Colors.cardBackground)
                                         .frame(height: 200)
                                     
                                     VStack(spacing: 12) {
@@ -84,10 +88,10 @@ struct AddItemView: View {
                         Spacer()
                         
                         Toggle("", isOn: $isFavorite)
-                            .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.primaryPurple))
+                            .toggleStyle(SwitchToggleStyle(tint: Theme.Colors.primaryButton))
                     }
                     .padding()
-                    .background(Constants.Colors.lightBackground)
+                    .background(Theme.Colors.cardBackground)
                     .cornerRadius(Constants.Dimensions.cornerRadius)
                     
                     Spacer()

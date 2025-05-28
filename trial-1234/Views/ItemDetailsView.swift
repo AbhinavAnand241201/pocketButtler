@@ -35,7 +35,7 @@ struct ItemDetailsView: View {
                     // Placeholder with icon
                     ZStack {
                         Rectangle()
-                            .fill(Constants.Colors.lightBackground)
+                            .fill(Constants.Colors.lightBackgroundColor)
                             .frame(height: 200)
                         
                         VStack(spacing: 12) {
@@ -71,7 +71,7 @@ struct ItemDetailsView: View {
                     HStack(spacing: 12) {
                         Image(systemName: "location.fill")
                             .font(.system(size: 18))
-                            .foregroundColor(Constants.Colors.teal)
+                            .foregroundColor(Theme.Colors.primaryButton)
                         
                         Text(item.location)
                             .font(.system(size: Constants.FontSizes.body))
@@ -82,7 +82,7 @@ struct ItemDetailsView: View {
                     HStack(spacing: 12) {
                         Image(systemName: "clock.fill")
                             .font(.system(size: 18))
-                            .foregroundColor(Constants.Colors.orange)
+                            .foregroundColor(Theme.Colors.iconDefault)
                         
                         Text("Last updated \(timeAgo(item.timestamp))")
                             .font(.system(size: Constants.FontSizes.body))
@@ -161,7 +161,7 @@ struct ItemDetailsView: View {
                 .padding()
             }
         }
-        .background(Constants.Colors.darkBackground.ignoresSafeArea())
+        .background(Constants.Colors.BackgroundView())
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -252,10 +252,10 @@ struct HistoryEntryRow: View {
     
     private func actionColor(_ action: String) -> Color {
         switch action {
-        case "Placed": return Constants.Colors.teal
-        case "Moved": return Constants.Colors.orange
-        case "Found": return Constants.Colors.lightPurple
-        default: return Constants.Colors.primaryPurple
+        case "Placed": return Theme.Colors.primaryButton
+        case "Moved": return Theme.Colors.iconDefault
+        case "Found": return Theme.Colors.primaryButton.opacity(0.8)
+        default: return Theme.Colors.primaryButton
         }
     }
     

@@ -3,35 +3,47 @@ import SwiftUI
 struct Theme {
     // MARK: - Colors
     struct Colors {
-        // Primary Colors
-        static let primary = Color(hex: "#7C3AED")  // Rich Violet
-        static let primaryLight = Color(hex: "#A78BFA")
-        static let primaryDark = Color(hex: "#5B21B6")
-        
-        // Accent Colors
-        static let accent = Color(hex: "#FBBF24")  // Bright Amber
-        static let accentLight = Color(hex: "#FCD34D")
-        
         // Background Colors
-        static let background = LinearGradient(
-            gradient: Gradient(colors: [
-                Color(hex: "#2A2A4A"),  // Dark purplish navy
-                Color(hex: "#4B3A7A")   // Muted purple with warmth
-            ]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
+        static let backgroundStart = Color.black      // Pure black at the top
+        static let backgroundEnd = Color(hex: "#2D2D2D")  // Dark gray at the bottom
         
         // Text Colors
-        static let textPrimary = Color.white
-        static let textSecondary = Color(hex: "#D1D5DB")  // Light Gray
-        static let textTertiary = Color(hex: "#9CA3AF")   // Lighter Gray
+        static let textPrimary = Color(hex: "#E5E5E5")  // Bright white-grey for primary text
+        static let textSecondary = Color(hex: "#A0A0A0") // Medium-light grey for secondary text
+        static let textTertiary = Color(hex: "#666666")  // Medium grey for tertiary text
         
         // UI Elements
-        static let cardBackground = Color(hex: "#1F2937").opacity(0.8)
-        static let divider = Color.white.opacity(0.2)
-        static let error = Color(hex: "#EF4444")  // Soft Red
-        static let success = Color(hex: "#10B981")  // Emerald
+        static let cardBackground = Color(hex: "#1F1F1F")  // Slightly lighter than background
+        static let divider = Color.white.opacity(0.15)
+        
+        // Interactive Elements
+        static let primaryButton = Color(hex: "#333333")  // Dark grey for buttons
+        static let primaryButtonHighlight = Color(hex: "#4A4A4A")  // Lighter grey for button hover
+        static let primaryButtonActive = Color.white      // White for button active state
+        
+        // Icons
+        static let iconDefault = Color(hex: "#B0B0B0")    // Light grey for icons
+        static let iconActive = Color.white               // White for active icons
+        
+        // Toggles
+        static let toggleTrackOff = Color(hex: "#333333")
+        static let toggleThumbOff = Color(hex: "#666666")
+        static let toggleTrackOn = Color.white
+        static let toggleThumbOn = Color.black
+        
+        // Status
+        static let error = Color(hex: "#808080")         // Medium grey for errors
+        static let success = Color(hex: "#A0A0A0")       // Light grey for success
+        static let warning = Color(hex: "#8C8C8C")       // Slightly darker grey for warnings
+        
+        // Map
+        static let mapPin = Color(hex: "#B0B0B0")
+        static let mapPinSelected = Color.white
+        static let clusterBackground = Color(hex: "#666666")
+        
+        // Graph Elements
+        static let graphBar = Color(hex: "#666666")
+        static let graphBarActive = Color.white
     }
     
     // MARK: - Typography

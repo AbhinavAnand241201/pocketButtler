@@ -9,11 +9,11 @@ struct TabBarButton: View {
         VStack(spacing: 4) {
             Image(systemName: icon)
                 .font(.system(size: 22))
-                .foregroundColor(isSelected ? Constants.Colors.primaryPurple : .white.opacity(0.7))
+                .foregroundColor(isSelected ? Theme.Colors.primaryButton : Theme.Colors.textSecondary)
             
             Text(text)
                 .font(.system(size: 12))
-                .foregroundColor(isSelected ? Constants.Colors.primaryPurple : .white.opacity(0.7))
+                .foregroundColor(isSelected ? Theme.Colors.primaryButton : Theme.Colors.textSecondary)
         }
         .frame(maxWidth: .infinity)
     }
@@ -21,8 +21,12 @@ struct TabBarButton: View {
 
 #Preview {
     ZStack {
-        Constants.Colors.darkBackground
-            .ignoresSafeArea()
+        LinearGradient(
+            gradient: Gradient(colors: [Theme.Colors.backgroundStart, Theme.Colors.backgroundEnd]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        .ignoresSafeArea()
         
         HStack {
             TabBarButton(icon: "house.fill", text: "Home", isSelected: true)

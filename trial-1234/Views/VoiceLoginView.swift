@@ -7,8 +7,7 @@ struct VoiceLoginView: View {
     var body: some View {
         ZStack {
             // Background
-            Constants.Colors.darkBackground
-                .ignoresSafeArea()
+            Constants.Colors.BackgroundView()
             
             VStack(spacing: Constants.Dimensions.standardPadding * 2) {
                 // Illustration

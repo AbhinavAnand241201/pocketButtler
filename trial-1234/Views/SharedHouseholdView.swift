@@ -43,7 +43,7 @@ struct SharedHouseholdView: View {
                                         .clipShape(Circle())
                                         .overlay(
                                             Circle()
-                                                .stroke(Constants.Colors.lightPurple, lineWidth: 2)
+                                                .stroke(Theme.Colors.iconDefault, lineWidth: 2)
                                         )
                                     
                                     Text(member.name)
