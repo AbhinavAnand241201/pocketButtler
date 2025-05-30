@@ -93,7 +93,7 @@ private struct AccountSectionView: View {
                     
                     // User info
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Maya Johnson")
+                        Text("Abhinav Anand")
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(Theme.Colors.textPrimary)
                         
