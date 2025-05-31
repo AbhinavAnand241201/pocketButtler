@@ -1,4 +1,3 @@
-import 'module-alias/register';
 import 'dotenv/config';
 import http from 'http';
 import express from 'express';
@@ -6,11 +5,14 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
+import cookieParser from 'cookie-parser';
 import { createTerminus } from '@godaddy/terminus';
-import { logger } from '@utils/logger';
-import { errorHandler } from '@middleware/error.middleware';
-import { initializeSocket } from '@services/socket.service';
-import apiRoutes from '@routes/api';
+import logger from './utils/logger';
+import { errorHandler, notFoundHandler } from './middleware/error.middleware';
+import apiRoutes from './routes/api';
+
+// Import socket service if needed
+// import { initializeSocket } from './services/socket.service';
 
 // Load environment variables
 const PORT = process.env.PORT || 3000;
@@ -20,17 +22,18 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pocket
 const app = express();
 const server = http.createServer(app);
 
-// Initialize Socket.IO
-initializeSocket(server);
+// Initialize Socket.IO if needed
+// initializeSocket(server);
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',
+  origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : '*',
   credentials: true
 }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Logging
 if (process.env.NODE_ENV === 'development') {
@@ -48,27 +51,22 @@ app.use(limiter);
 // API Routes
 app.use('/api', apiRoutes);
 
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok' });
-});
+// Health check endpoint (handled by apiRoutes)
+// 404 handler for non-API routes
+app.use(notFoundHandler);
 
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({
-    status: 'error',
-    message: 'Not Found',
-    data: null
-  });
-});
-
-// Global error handler
+// Global error handler - must be the last middleware
 app.use(errorHandler);
 
 // Database connection
 const connectDB = async (): Promise<void> => {
   try {
-    await mongoose.connect(MONGODB_URI);
+    await mongoose.connect(MONGODB_URI, {
+      // @ts-ignore - these options are valid but not in the type definitions
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    } as mongoose.ConnectOptions);
+    
     logger.info('MongoDB connected successfully');
   } catch (error) {
     logger.error(`MongoDB connection error: ${error}`);
