@@ -1,69 +1,97 @@
-import winston from 'winston';
-import 'winston-daily-rotate-file';
-import path from 'path';
+// Simple logger implementation that works without external dependencies
 
-const { combine, timestamp, printf, colorize, align } = winston.format;
-
-const logDir = 'logs';
-
-// Define log format
-const logFormat = printf(({ level, message, timestamp, stack }) => {
-  return `${timestamp} ${level}: ${stack || message}`;
-});
-
-// Define different colors for each level
-const colors = {
-  error: 'red',
-  warn: 'yellow',
-  info: 'green',
-  http: 'magenta',
-  debug: 'blue',
+const logLevels = {
+  error: 0,
+  warn: 1,
+  info: 2,
+  http: 3,
+  debug: 4,
 };
 
-// Add colors to winston
-winston.addColors(colors);
+const colors = {
+  error: '\x1b[31m', // red
+  warn: '\x1b[33m',  // yellow
+  info: '\x1b[32m',  // green
+  http: '\x1b[35m',  // magenta
+  debug: '\x1b[34m', // blue
+  reset: '\x1b[0m',  // reset color
+};
 
-// Create the logger
-const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || 'info',
-  format: combine(
-    timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-    winston.format.errors({ stack: true }),
-    winston.format.splat(),
-    winston.format.json()
-  ),
-  defaultMeta: { service: 'pocket-butler-backend' },
-  transports: [
-    // Write all logs with level `error` and below to `error.log`
-    new winston.transports.DailyRotateFile({
-      filename: path.join(logDir, 'error-%DATE%.log'),
-      level: 'error',
-      maxSize: '20m',
-      maxFiles: '14d',
-    }),
-    // Write all logs with level `info` and below to `combined.log`
-    new winston.transports.DailyRotateFile({
-      filename: path.join(logDir, 'combined-%DATE%.log'),
-      maxSize: '20m',
-      maxFiles: '14d',
-    }),
-  ],
-  exitOnError: false, // Do not exit on handled exceptions
+interface Logger {
+  error: (message: string, ...meta: any[]) => void;
+  warn: (message: string, ...meta: any[]) => void;
+  info: (message: string, ...meta: any[]) => void;
+  http: (message: string, ...meta: any[]) => void;
+  debug: (message: string, ...meta: any[]) => void;
+}
+
+const createLogger = (): Logger => {
+  const logLevel = process.env.LOG_LEVEL || 'info';
+  const currentLogLevel = logLevels[logLevel as keyof typeof logLevels] ?? 2; // default to 'info'
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  const getTimestamp = (): string => {
+    return new Date().toISOString();
+  };
+
+  const log = (level: string, message: string, ...meta: any[]): void => {
+    const timestamp = getTimestamp();
+    const color = colors[level as keyof typeof colors] || '';
+    const reset = colors.reset;
+    
+    const logMessage = `[${timestamp}] ${level.toUpperCase()}: ${message}`;
+    
+    if (meta.length > 0) {
+      console.log(`${color}${logMessage}${reset}`, ...meta);
+    } else {
+      console.log(`${color}${logMessage}${reset}`);
+    }
+  };
+
+  return {
+    error: (message: string, ...meta: any[]) => {
+      if (currentLogLevel >= logLevels.error) {
+        log('error', message, ...meta);
+      }
+    },
+    warn: (message: string, ...meta: any[]) => {
+      if (currentLogLevel >= logLevels.warn) {
+        log('warn', message, ...meta);
+      }
+    },
+    info: (message: string, ...meta: any[]) => {
+      if (currentLogLevel >= logLevels.info) {
+        log('info', message, ...meta);
+      }
+    },
+    http: (message: string, ...meta: any[]) => {
+      if (currentLogLevel >= logLevels.http) {
+        log('http', message, ...meta);
+      }
+    },
+    debug: (message: string, ...meta: any[]) => {
+      if (!isProduction && currentLogLevel >= logLevels.debug) {
+        log('debug', message, ...meta);
+      }
+    },
+  };
+};
+
+// Create and export logger instance
+const logger = createLogger();
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error: Error) => {
+  logger.error(`Uncaught Exception: ${error.message}`, error);
+  // Consider whether to exit here based on the error
+  // process.exit(1);
 });
 
-// If we're not in production then log to the `console` with the format:
-// `${info.level}: ${info.message} JSON.stringify({ ...rest })`
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(
-    new winston.transports.Console({
-      format: combine(
-        colorize({ all: true }),
-        timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-        align(),
-        logFormat
-      ),
-    })
-  );
-}
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason: unknown) => {
+  logger.error('Unhandled Rejection:', reason);
+  // Consider whether to exit here based on the error
+  // process.exit(1);
+});
 
 export default logger;
