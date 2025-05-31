@@ -49,6 +49,30 @@ playground.xcworkspace
 .build/
 
 # CocoaPods
+
+# Project specific
+tasks.md
+build.log
+
+# Environment variables
+.env
+
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+/dist
+
+# Misc
+.DS_Store
+Thumbs.db
 #
 # We recommend against adding the Pods directory to your .gitignore. However
 # you should judge for yourself, the pros and cons are mentioned at:
